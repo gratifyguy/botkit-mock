@@ -13,7 +13,7 @@ class Bot {
         };
         var self = this;
         // this object will store bot answer for each user separately
-        this.detailed_answers = {
+        this.detailedAnswers = {
             // "userId": ["answer1","anwer2"]
         };
         // store all open convos
@@ -61,9 +61,9 @@ class Bot {
     reply(message, text, cb) {
         console.log('bot reply =>', text)
         // check if this is first time then create anwers array
-        if (!this.detailed_answers[message.user])
-            this.detailed_answers[message.user] = []
-        this.detailed_answers[message.user].push(text)
+        if (!this.detailedAnswers[message.user])
+            this.detailedAnswers[message.user] = []
+        this.detailedAnswers[message.user].push(text)
         if (typeof cb === 'function') {
             cb({}, {})
         }
@@ -74,8 +74,8 @@ class Bot {
         this.convo = new Convo(this)
         // setup convo owner
         this.convo.user = message.user;
-        this.convo.source_message.user = message.user;
-        this.convo.source_message.channel = message.user;
+        this.convo.sourceMessage.user = message.user;
+        this.convo.sourceMessage.channel = message.user;
         console.log('convo user => ', message.user)
         // store convo
         this.convos.push(this.convo)
@@ -84,10 +84,10 @@ class Bot {
     }
     //say mock - without logic
     say(data, callback) {
-        if (!this.detailed_answers[data.channel])
-            this.detailed_answers[data.channel] = []
+        if (!this.detailedAnswers[data.channel])
+            this.detailedAnswers[data.channel] = []
         console.log('123321 =>', data)
-        this.detailed_answers[data.channel].push(data.text)
+        this.detailedAnswers[data.channel].push(data.text)
         if (typeof callback === 'function') {
             callback(null, {
                 message: {}
@@ -181,8 +181,8 @@ class Controller {
                 } else {
                     setTimeout(() => {
                         let result;
-                        if (self.bot.detailed_answers[message.user]) {
-                            result = self.bot.detailed_answers[message.user][self.bot.detailed_answers[message.user].length - 1];
+                        if (self.bot.detailedAnswers[message.user]) {
+                            result = self.bot.detailedAnswers[message.user][self.bot.detailedAnswers[message.user].length - 1];
                         }
                         // resolve with last message
                         self.typeOptions.resolve(result)
@@ -213,7 +213,7 @@ class Convo {
     constructor(bot) {
         this.id = convoId = convoId + 1;
         this.bot = bot;
-        this.source_message = {
+        this.sourceMessage = {
             user: ''
         }
 
@@ -222,12 +222,12 @@ class Convo {
     ask(message, callbacks) {
         var self = this;
         // save bot message in user bot`s answers
-        if (!self.bot.detailed_answers[self.user])
+        if (!self.bot.detailedAnswers[self.user])
         // if answers not exists create answers array for current convo user
-            self.bot.detailed_answers[self.user] = []
+            self.bot.detailedAnswers[self.user] = []
             // push bot message to answers array
-        self.bot.detailed_answers[self.user].push(message)
-        console.log('try find convo owner', self.bot.detailed_answers)
+        self.bot.detailedAnswers[self.user].push(message)
+        console.log('try find convo owner', self.bot.detailedAnswers)
         // find current typer by message.user
         var currentTyper = (self.bot.controller.allTypers || []).filter((typer) => {
             return typer.user == self.user;
@@ -242,7 +242,7 @@ class Convo {
                     // simple callback
                     callbacks({
                         text: messageNew.text,
-                        channel: this.source_message.user
+                        channel: this.sourceMessage.user
                     }, self)
                 } else if (Array.isArray(callbacks)) {
                     // find callback in callbacks array
@@ -270,10 +270,10 @@ class Convo {
                             }
                         } else {
                             // find default callback and invoke
-                            var default_callback = callbacks.filter((c) => {
+                            var defaultCallback = callbacks.filter((c) => {
                                 return c.default
                             })[0]
-                            if (default_callback) {
+                            if (defaultCallback) {
                                 if (messageNew.callbackTimeout) {
                                     setTimeout(() => {
                                         default_callback.callback({
@@ -282,7 +282,7 @@ class Convo {
                                         }, self)
                                     }, messageNew.callbackTimeout)
                                 } else {
-                                    default_callback.callback({
+                                    defaultCallback.callback({
                                         text: messageNew.text,
                                         user: self.user
                                     }, self)
@@ -296,15 +296,15 @@ class Convo {
                 if (messageNew.timeout && messageNew.isAssertion) {
                     return setTimeout(() => {
                         console.log('make assertion timeout', self.user, messageNew)
-                        self.bot.controller.typeOptions.resolve(self.bot.detailed_answers[self.user][self.bot.detailed_answers[self.user].length - 1 - (messageNew.deep || 0)])
+                        self.bot.controller.typeOptions.resolve(self.bot.detailedAnswers[self.user][self.bot.detailedAnswers[self.user].length - 1 - (messageNew.deep || 0)])
                     }, messageNew.timeout)
                 }
                 if (messageNew.isAssertion && !messageNew.timeout) {
                     setTimeout(() => {
                         console.log('make assertion', self.user, messageNew)
                         console.log('make assertion', self.user)
-                        console.log('make assertion', self.bot.detailed_answers)
-                        self.bot.controller.typeOptions.resolve(self.bot.detailed_answers[self.user][self.bot.detailed_answers[self.user].length - 1 - (messageNew.deep || 0)])
+                        console.log('make assertion', self.bot.detailedAnswers)
+                        self.bot.controller.typeOptions.resolve(self.bot.detailedAnswers[self.user][self.bot.detailedAnswers[self.user].length - 1 - (messageNew.deep || 0)])
                     }, 200)
                 }
             } else {
@@ -320,10 +320,10 @@ class Convo {
     say(text) {
         var self = this;
         // check if answers array exists for user
-        if (!self.bot.detailed_answers[self.user])
-            self.bot.detailed_answers[self.user] = []
+        if (!self.bot.detailedAnswers[self.user])
+            self.bot.detailedAnswers[self.user] = []
             // push anwser to array
-        self.bot.detailed_answers[self.user].push(text)
+        self.bot.detailedAnswers[self.user].push(text)
     }
     // mock for next no logic
     next() {
