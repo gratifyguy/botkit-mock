@@ -13,7 +13,7 @@ describe("controller tests",()=>{
         done();
     });
 
-    it('should return `Mock help mesasge.` if user types `help`', (done)=>{
+    it('should return `help message` if user types `help`', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
                 first:true,
@@ -21,7 +21,7 @@ describe("controller tests",()=>{
                 messages:[{text: 'help', isAssertion:true}]
             }]).then((text)=>{
                 console.log('text =>', text)
-                assert.equal(text, 'Mock help mesasge.')
+                assert.equal(text, 'help message')
                 done()
             })
     });

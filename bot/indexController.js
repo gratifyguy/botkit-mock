@@ -1,7 +1,7 @@
 module.exports = function(bot,controller){
 	// simple answer
 	controller.hears(['help'], 'direct_message', function(bot, message){
-	    bot.reply(message, 'Mock help mesasge.');
+	    bot.reply(message, 'help message');
     });
 
     // simple conversation
