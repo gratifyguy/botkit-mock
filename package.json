@@ -4,7 +4,7 @@
   "description": "mock of botkit lib",
   "main": "index.js",
   "scripts": {
-    "test": "find ./examples -name '*Spec.js' | xargs mocha -t 2000 -R spec"
+    "test": "find ./test -name '*Spec.js' | xargs mocha -t 2000 -R spec"
   },
   "author": "",
   "license": "ISC",

@@ -8,9 +8,9 @@ module.exports = function(bot,controller){
 	controller.hears(['hi'], 'direct_message', function(bot, message){
 		bot.startConversation(message, function(response, convo){
 			convo.ask('hey there', function(response, convo){
-				convo.say('hi mock');
-				convo.ask('hey 2 mock', function(response, convo){
-					convo.say('hey 2 mock');
+				convo.say('..user typed any text after `hi`');
+				convo.ask('heres a question', function(response, convo){
+					convo.say('heres an answer');
 					convo.next();
 				})
 				convo.next();

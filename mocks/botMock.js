@@ -14,7 +14,7 @@ class Bot {
         var self = this;
         // this object will store bot answer for each user separately
         this.detailedAnswers = {
-            // "userId": ["answer1","anwer2"]
+        // "userId": ["answer1","anwer2"]
         };
         // store all open convos
         this.convos = []
