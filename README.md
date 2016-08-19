@@ -1,28 +1,36 @@
 # README #
 
-BotMock - Test Botkit and Slack responses
+BotMock - Write tests for Botkit.
 
 ### Setup ###
 
-1. Run `npm install`
-2. Run `npm test`
+1. Clone repo
+2. Run `npm install`
+3. Run `npm test`
+4. Copy `mocks` into your project root
 
 ### Flags ###
-`first` - if true, indicates that the user spoke first.
+`first` - indicates which user spoke first in multi-user testing.
 
-`deep` - indicates which message to return in `.then()`. 1 is the last message, 2 is the second-to-last, etc..
+`deep` - indicates the index of the conversation response to return in `.then()`. 0 is the last response, 1 is the second-to-last, etc..
+
+`isAssertion` - indicates the conversation response array to return in `.then()` in multi-user testing. 
 
 ### How To Use ###
 
-You can include `botMock` in your own Botkit project to mock Botkit responses. Just subsitute `botMock` when testing.
+BotMock works by intercepting your normal Botkit instance.
 
 ```
+
 var bot;
 if(env !== 'test'){
-    bot = require('../app/bots/bot');
+    // your normal bot instance
+    bot = require('app/bots/bot');
 }
+
 else{
-    var botMock =  require('../test/mock/botMock');
+    // your mock bot instance
+    var botMock =  require('mocks/botMock');
     bot = new botMock.controller('userSlackId', 'userName').bot;
 }
 ```
