@@ -1,4 +1,4 @@
-module.exports = function(bot,controller){
+module.exports = function(bot, controller){
 	// simple answer
 	controller.hears(['help'], 'direct_message', function(bot, message){
 	    bot.reply(message, 'help message');

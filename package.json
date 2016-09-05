@@ -4,12 +4,15 @@
   "description": "mock of botkit lib",
   "main": "index.js",
   "scripts": {
-    "test": "find ./test -name '*Spec.js' | xargs mocha -t 2000 -R spec"
+    "test_mocha": "find ./test -name '*MochaSpec.js' | xargs mocha -t 2000 -R spec",
+    "test_jasmine": "find ./test -name '*JasmineSpec.js' | xargs jasmine-node"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "assert": "^1.4.1",
+    "botkit": "^0.2.2",
+    "jasmine-node": "^1.14.5",
     "mocha": "^2.4.5"
   },
   "repository": {
