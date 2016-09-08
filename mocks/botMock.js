@@ -102,7 +102,7 @@ class Bot {
 class Controller {
     // constructor taks slackUserId and userName
     constructor(userId, userName) {
-        this.user_name = userName;
+        this.userName = userName;
         this.user = userId
         // create bot object
         this.bot = new Bot(this);
@@ -163,7 +163,7 @@ class Controller {
             action.callback(self.bot, {
                 user: message.user || self.user,
                 is_bot: self.is_bot || false,
-                username: self.user_name,
+                username: self.userName,
                 message: message.text,
                 text: message.text,
                 match: message.match,
