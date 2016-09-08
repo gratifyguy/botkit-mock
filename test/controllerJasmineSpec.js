@@ -7,8 +7,8 @@ describe("controller tests",()=>{
 	beforeEach((done)=>{
         var self = this;
         self.slackId = 'test'
-        self.user_name = 'test'
-        self.controller =new botMock.controller(self.slackId,self.user_name)
+        self.userName = 'test'
+        self.controller =new botMock.controller(self.slackId,self.userName)
         testedFile(self.controller.bot,self.controller)
         done();
     });
