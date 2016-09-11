@@ -58,3 +58,5 @@ it('should return `help message` if user types `help`', (done)=>{
         })
 });
 ```
+
+Built by the team at https://www.gratify.chat.
