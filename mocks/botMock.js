@@ -28,7 +28,6 @@ class Bot {
 
         this.api = this.buildProxyAPI();
 
-        console.log(this.api)
 
         this.callbacksHashByConvo = {};
     }
@@ -86,7 +85,6 @@ class Bot {
     say(data, callback) {
         if (!this.detailedAnswers[data.channel])
             this.detailedAnswers[data.channel] = []
-        console.log('123321 =>', data)
         this.detailedAnswers[data.channel].push(data.text)
         if (typeof callback === 'function') {
             callback(null, {
@@ -148,15 +146,24 @@ class Controller {
         // find action which will handle this message
         var action = self.actions.filter((obj) => {
             // each action has pattern
-            let p = obj.pattern;
-            if (Array.isArray(obj.pattern))
-                p = obj.pattern.join('|');
+            let pattern = obj.pattern;
 
-            if ((message.text || message).match(new RegExp(p, 'i'))){
-                message.match = (message.text || message).match(new RegExp(p, 'i'))
+            if (Array.isArray(obj.pattern)) {
+                for (let i = 0;i < pattern.length;i++) {
+                    if ((message.text || message).match(new RegExp(pattern[i], 'i'))) {
+                        message.match = (message.text || message).match(pattern);
+
+                        return (message.text || message).match(new RegExp(pattern[i], 'i'));
+                    }
+                }
+            } else {
+                if ((message.text || message).match(new RegExp(pattern, 'i'))) {
+                    message.match = (message.text || message).match(new RegExp(pattern, 'i'))
+                }
             }
-            return (message.text || message).match(new RegExp(p, 'i'));
-        })[0]
+
+            return (message.text || message).match(new RegExp(pattern, 'i'));
+        })[0];
         if (action) {
             console.log('message => ', message)
             // call action callback with bot and new message object
