@@ -6,7 +6,7 @@ BotMock - Write tests for Botkit.
 
 1. Clone repo
 2. Run `npm install`
-3. Run `npm test`
+3. Run `npm run test_mocha` or `npm run test_jasmine`
 4. Copy `mocks` into your project root
 
 ### Flags ###
