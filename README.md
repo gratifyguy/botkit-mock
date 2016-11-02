@@ -6,7 +6,7 @@ BotMock - Write tests for Botkit.
 
 1. Clone repo
 2. Run `npm install`
-3. Run `npm test`
+3. Run `npm run test_mocha` or `npm run test_jasmine`
 4. Copy `mocks` into your project root
 
 ### Flags ###
@@ -21,7 +21,6 @@ BotMock - Write tests for Botkit.
 BotMock works by intercepting your normal Botkit instance.
 
 ```
-
 var bot;
 if(env !== 'test'){
     // your normal bot instance
@@ -35,7 +34,7 @@ else{
 }
 ```
 
-Then this...
+Normal botkit function
 
 ```
 controller.hears(['help'], 'direct_message', function(bot, message){
@@ -43,9 +42,10 @@ controller.hears(['help'], 'direct_message', function(bot, message){
 });
 ```
 
-can be tested like this...
+Normal botkit function test
 
 ```
+const assert = require('assert');
 const botMock = require('../mocks/botMock'); // require botmock
 const testedFile = require("../bot/indexController"); // require file you are testing
 
@@ -54,8 +54,8 @@ describe("controller tests",()=>{
         var self = this;
         self.slackId = 'test'
         self.userName = 'test'
-        self.controller =new botMock.controller(self.slackId,self.userName)
-        testedFile(self.controller.bot,self.controller)
+        self.controller = new botMock.controller(self.slackId,self.userName) //instantiate botMock
+        testedFile(self.controller.bot, self.controller) // inject botMock into the file being tested
         done();
     });
     it('should return `help message` if user types `help`', (done)=>{
