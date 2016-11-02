@@ -46,16 +46,29 @@ controller.hears(['help'], 'direct_message', function(bot, message){
 can be tested like this...
 
 ```
-it('should return `help message` if user types `help`', (done)=>{
-	var self = this;
-	return self.controller.usersInput([{
-            first:true,
-            user: self.slackId,
-            messages:[{text: 'help', isAssertion:true}]
-        }]).then((text)=>{
-            assert.equal(text, 'help message')
-            done()
-        })
+const botMock = require('../mocks/botMock'); // require botmock
+const testedFile = require("../bot/indexController"); // require file you are testing
+
+describe("controller tests",()=>{
+    beforeEach((done)=>{
+        var self = this;
+        self.slackId = 'test'
+        self.userName = 'test'
+        self.controller =new botMock.controller(self.slackId,self.userName)
+        testedFile(self.controller.bot,self.controller)
+        done();
+    });
+    it('should return `help message` if user types `help`', (done)=>{
+    	var self = this;
+    	return self.controller.usersInput([{
+                first:true,
+                user: self.slackId,
+                messages:[{text: 'help', isAssertion:true}]
+            }]).then((text)=>{
+                assert.equal(text, 'help message')
+                done()
+            })
+    });
 });
 ```
 
