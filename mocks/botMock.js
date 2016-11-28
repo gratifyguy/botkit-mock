@@ -9,7 +9,12 @@ class Bot {
         this.apiResponses = new api();
         this.botkit = {
             tasks: [],
-            log: function(){}
+            log: function(){},
+            memory_store: {
+                users: {},
+                channels: {},
+                teams: {}
+            }
         };
         var self = this;
         // this object will store bot answer for each user separately
@@ -30,6 +35,57 @@ class Bot {
 
 
         this.callbacksHashByConvo = {};
+
+        this.botkit.storage = {
+            teams: {
+                get: function(team_id, cb) {
+                    cb(null, self.botkit.memory_store.teams[team_id]);
+                },
+                save: function(team, cb) {
+                    if (team.id) {
+                        self.botkit.memory_store.teams[team.id] = team;
+                        cb(null, team.id);
+                    } else {
+                        cb('No ID specified');
+                    }
+                },
+                all: function(cb) {
+                    cb(null, self.botkit.memory_store.teams);
+                }
+            },
+            users: {
+                get: function(user_id, cb) {
+                    cb(null, self.botkit.memory_store.users[user_id]);
+                },
+                save: function(user, cb) {
+                    if (user.id) {
+                        self.botkit.memory_store.users[user.id] = user;
+                        cb(null, user.id);
+                    } else {
+                        cb('No ID specified');
+                    }
+                },
+                all: function(cb) {
+                    cb(null, self.botkit.memory_store.users);
+                }
+            },
+            channels: {
+                get: function(channel_id, cb) {
+                    cb(null, self.botkit.memory_store.channels[channel_id]);
+                },
+                save: function(channel, cb) {
+                    if (channel.id) {
+                        self.botkit.memory_store.channels[channel.id] = channel;
+                        cb(null, channel.id);
+                    } else {
+                        cb('No ID specified');
+                    }
+                },
+                all: function(cb) {
+                    cb(null, self.botkit.memory_store.channels);
+                }
+            }
+        };
     }
 
     getAPILogByNumber(i) {
