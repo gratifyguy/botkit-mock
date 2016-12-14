@@ -114,9 +114,17 @@ class Bot {
     // reply to user and store reply in array
     reply(message, text, cb) {
         // check if this is first time then create anwers array
-        if (!this.detailedAnswers[message.user])
-            this.detailedAnswers[message.user] = []
-        this.detailedAnswers[message.user].push(text)
+        if(message.channel){
+            if(!this.detailedAnswers[message.channel]){
+                this.detailedAnswers[message.channel] = []
+            }
+            this.detailedAnswers[message.channel].push(text)
+        }
+        else{
+            if (!this.detailedAnswers[message.user])
+                this.detailedAnswers[message.user] = []
+            this.detailedAnswers[message.user].push(text)
+        }
         if (typeof cb === 'function') {
             cb({}, {})
         }
