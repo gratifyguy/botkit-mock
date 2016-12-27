@@ -89,7 +89,6 @@ class Bot {
     }
 
     getAPILogByNumber(i) {
-        console.log('API CALLS =>', this.log)
         return this.log[i]
     }
 
@@ -114,11 +113,18 @@ class Bot {
 
     // reply to user and store reply in array
     reply(message, text, cb) {
-        console.log('bot reply =>', text)
         // check if this is first time then create anwers array
-        if (!this.detailedAnswers[message.user])
-            this.detailedAnswers[message.user] = []
-        this.detailedAnswers[message.user].push(text)
+        if(message.channel){
+            if(!this.detailedAnswers[message.channel]){
+                this.detailedAnswers[message.channel] = []
+            }
+            this.detailedAnswers[message.channel].push(text)
+        }
+        else{
+            if (!this.detailedAnswers[message.user])
+                this.detailedAnswers[message.user] = []
+            this.detailedAnswers[message.user].push(text)
+        }
         if (typeof cb === 'function') {
             cb({}, {})
         }
@@ -131,7 +137,6 @@ class Bot {
         this.convo.user = message.user;
         this.convo.sourceMessage.user = message.user;
         this.convo.sourceMessage.channel = message.user;
-        console.log('convo user => ', message.user)
         // store convo
         this.convos.push(this.convo)
         // invoke callback
@@ -221,7 +226,6 @@ class Controller {
             return (message.text || message).match(new RegExp(pattern, 'i'));
         })[0];
         if (action) {
-            console.log('message => ', message)
             // call action callback with bot and new message object
             action.callback(self.bot, {
                 user: message.user || self.user,
@@ -237,7 +241,6 @@ class Controller {
             if (message.isAssertion)
                 if (message.onEvent) {
                     setTimeout(() => {
-                        console.log('message => ', {})
                         // simple resolve without params if we handle onEvent messages ( when user join to channel and join to team or leave channel )
                         self.typeOptions.resolve()
                     }, 200)
@@ -300,7 +303,6 @@ class Convo {
             if (currentTyper.messages.length) {
                 // get last message
                 var messageNew = currentTyper.messages.shift()
-                console.log('process worker message => ', messageNew)
                 if (typeof(callbacks) == 'function' && (messageNew.text || messageNew.file)) {
                     // simple callback
                     callbacks({
@@ -312,7 +314,6 @@ class Convo {
                     var callback = callbacks.filter((c) => {
                         return (messageNew.text || '').toString().match(c.pattern)
                     })[0]
-                    console.log("callbacks => ", callbacks)
                     // check that message has text - we can`t send empty messages
                     if (messageNew.text || messageNew.file)
                     // invoke callback
