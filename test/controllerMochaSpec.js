@@ -39,7 +39,7 @@ describe("controller tests",()=>{
             })
     });
 
-    it('should return question `heres a question` if user type any text after `hi`', (done)=>{
+    it('should return question `here a question` if user type any text after `hi`', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
                 first:true,
@@ -47,7 +47,7 @@ describe("controller tests",()=>{
                 messages:[{text: 'hi'}, {text: 'its true', isAssertion:true}]
             }]).then((text)=>{
                 console.log('text =>', text)
-                assert.equal(text, 'heres a question')
+                assert.equal(text, 'here a question')
                 done()
             })
     });
@@ -67,7 +67,7 @@ describe("controller tests",()=>{
             })
     });
 
-    it('should return `heres a question` if user type any text after bot says `..user typed any text after `hi``', (done)=>{
+    it('should return `here a question` if user type any text after bot says `..user typed any text after `hi``', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
                 first:true,
@@ -75,7 +75,7 @@ describe("controller tests",()=>{
                 messages:[{text: 'hi'}, {text: 'random user message 1'}, {text: 'random user message 2', isAssertion:true, }]
             }]).then((text)=>{
                 console.log('text =>', text)
-                assert.equal(text, 'heres an answer')
+                assert.equal(text, 'here an answer')
                 done()
             })
     });
