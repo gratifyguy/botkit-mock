@@ -4,6 +4,11 @@ module.exports = function(bot, controller){
 	    bot.reply(message, 'help message');
     });
 
+    controller.hears(['hello bot'], 'direct_mention', function(bot, message){
+	    bot.reply(message, 'hello');
+    });
+
+
     // simple conversation
 	controller.hears(['hi'], 'direct_message', function(bot, message){
 		bot.startConversation(message, function(response, convo){
