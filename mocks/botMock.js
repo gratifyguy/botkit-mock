@@ -204,6 +204,8 @@ class Controller {
                 msg = {
                     text: msg,
                 }
+
+            msg.type = (whoStartConvoWithBotFirst.type || 'direct_message');
                 // set message user
             msg.user = msg.user || whoStartConvoWithBotFirst.user
             // send first message
@@ -214,24 +216,24 @@ class Controller {
         var self = this;
         // find action which will handle this message
         var action = self.actions.filter((obj) => {
+            let matchType = obj.type === message.type;
             // each action has pattern
             let pattern = obj.pattern;
-
             if (Array.isArray(obj.pattern)) {
                 for (let i = 0;i < pattern.length;i++) {
                     if ((message.text || message).match(new RegExp(pattern[i], 'i'))) {
                         message.match = (message.text || message).match(pattern);
 
-                        return (message.text || message).match(new RegExp(pattern[i], 'i'));
+                        return (message.text || message).match(new RegExp(pattern[i], 'i')) && matchType;
                     }
                 }
             } else {
                 if ((message.text || message).match(new RegExp(pattern, 'i'))) {
-                    message.match = (message.text || message).match(new RegExp(pattern, 'i'))
+                    message.match = (message.text || message).match(new RegExp(pattern, 'i')) && matchType;
                 }
             }
 
-            return (message.text || message).match(new RegExp(pattern, 'i'));
+            return (message.text || message).match(new RegExp(pattern, 'i')) && matchType;
         })[0];
         if (action) {
             // call action callback with bot and new message object
@@ -301,7 +303,6 @@ class Convo {
             self.bot.detailedAnswers[self.user] = []
             // push bot message to answers array
         self.bot.detailedAnswers[self.user].push(message)
-        console.log('try find convo owner', self.bot.detailedAnswers)
         // find current typer by message.user
         var currentTyper = (self.bot.controller.allTypers || []).filter((typer) => {
             return typer.user == self.user;
@@ -381,7 +382,6 @@ class Convo {
 
         } else {
             // when can`t find typer by slack id
-            console.log('FAIL!!!')
         }
     }
     // simple say mock we just store answer in array
