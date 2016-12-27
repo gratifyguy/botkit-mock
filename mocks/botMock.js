@@ -132,21 +132,29 @@ class Bot {
     // start new conversation
     startConversation(message, callback) {
         // creat enew convo object
-        this.convo = new Convo(this)
+        this.convo = new Convo(this);
         // setup convo owner
         this.convo.user = message.user;
         this.convo.sourceMessage.user = message.user;
         this.convo.sourceMessage.channel = message.user;
         // store convo
-        this.convos.push(this.convo)
+        this.convos.push(this.convo);
         // invoke callback
         callback(null, this.convo)
     }
     //say mock - without logic
-    say(data, callback) {
-        if (!this.detailedAnswers[data.channel])
-            this.detailedAnswers[data.channel] = []
-        this.detailedAnswers[data.channel].push(data.text)
+    say(message, callback) {
+        if(message.channel){
+            if(!this.detailedAnswers[message.channel]){
+                this.detailedAnswers[message.channel] = []
+            }
+            this.detailedAnswers[message.channel].push(message.text)
+        }
+        else{
+            if (!this.detailedAnswers[message.user])
+                this.detailedAnswers[message.user] = [];
+            this.detailedAnswers[message.user].push(message.text)
+        }
         if (typeof callback === 'function') {
             callback(null, {
                 message: {}
@@ -359,15 +367,11 @@ class Convo {
 
                 if (messageNew.timeout && messageNew.isAssertion) {
                     return setTimeout(() => {
-                        console.log('make assertion timeout', self.user, messageNew)
                         self.bot.controller.typeOptions.resolve(self.bot.detailedAnswers[self.user][self.bot.detailedAnswers[self.user].length - 1 - (messageNew.deep || 0)])
                     }, messageNew.timeout)
                 }
                 if (messageNew.isAssertion && !messageNew.timeout) {
                     setTimeout(() => {
-                        console.log('make assertion', self.user, messageNew)
-                        console.log('make assertion', self.user)
-                        console.log('make assertion', self.bot.detailedAnswers)
                         self.bot.controller.typeOptions.resolve(self.bot.detailedAnswers[self.user][self.bot.detailedAnswers[self.user].length - 1 - (messageNew.deep || 0)])
                     }, 200)
                 }

@@ -4,8 +4,13 @@ module.exports = function(bot, controller){
 	    bot.reply(message, 'help message');
     });
 
-    controller.hears(['hello bot'], 'direct_mention', function(bot, message){
-	    bot.reply(message, 'hello');
+    controller.hears(['hello bot reply'], 'direct_mention', function(bot, message){
+	    bot.reply(message, 'hello bot reply');
+    });
+
+    controller.hears(['hello bot say'], 'direct_mention', function(bot, message){
+        message.text = 'hello bot say';
+        bot.say(message);
     });
 
 

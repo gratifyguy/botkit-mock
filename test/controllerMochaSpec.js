@@ -80,15 +80,28 @@ describe("controller tests",()=>{
             })
     });
 
-    it('should return `hello` in channel if user types `hello bot` in channel', (done)=>{
+    it('should return `hello bot reply` (through bot.reply) in channel if user types `hello bot` in channel', (done)=>{
         var self = this;
         return self.controller.usersInput([{
                 first: true,
                 user: self.slackId,
-                messages:[{channel: "newbies", text: 'hello bot', isAssertion: true}]
+                messages:[{channel: "newbies", text: 'hello bot reply', isAssertion: true}]
             }]).then((text)=>{
-                console.log('text =>', self.controller.bot.detailedAnswers["newbies"][0])
-                assert.equal(self.controller.bot.detailedAnswers["newbies"][0], 'hello')
+                console.log('text =>', self.controller.bot.detailedAnswers["newbies"][0]);
+                assert.equal(self.controller.bot.detailedAnswers["newbies"][0], 'hello bot reply');
+                done()
+            })
+    });
+
+    it('should return `hello bot say` (through bot.say) in channel if user types `hello bot` in channel', (done)=>{
+        var self = this;
+        return self.controller.usersInput([{
+                first: true,
+                user: self.slackId,
+                messages:[{channel: "newbies", text: 'hello bot say', isAssertion: true}]
+            }]).then((text)=>{
+                console.log('text =>', self.controller.bot.detailedAnswers["newbies"][0]);
+                assert.equal(self.controller.bot.detailedAnswers["newbies"][0], 'hello bot say');
                 done()
             })
     });
