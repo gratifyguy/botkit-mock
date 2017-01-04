@@ -147,4 +147,46 @@ describe("controller tests",()=>{
             done()
         })
     });
+
+    it('should return `hello bot multiple` if user types `hello bot multiple` as direct_message', (done)=>{
+        var self = this;
+        return self.controller.usersInput([{
+            //by if type null we using type: direct_message
+            type: 'direct_message',
+            first: true,
+            user: self.slackId,
+            messages:[{text: 'hello bot multiple', isAssertion: true}]
+        }]).then((text)=>{
+            assert.equal(text, 'hello bot multiple');
+            done()
+        })
+    });
+
+    it('should return `hello bot multiple` if user types `hello bot multiple` as ambient', (done)=>{
+        var self = this;
+        return self.controller.usersInput([{
+            //by if type null we using type: direct_message
+            type: 'ambient',
+            first: true,
+            user: self.slackId,
+            messages:[{text: 'hello bot multiple', isAssertion: true}]
+        }]).then((text)=>{
+            assert.equal(text, 'hello bot multiple');
+            done()
+        })
+    });
+
+    it('should return `hello bot multiple` if user types `hello bot multiple` as mention', (done)=>{
+        var self = this;
+        return self.controller.usersInput([{
+            //by if type null we using type: direct_message
+            type: 'mention',
+            first: true,
+            user: self.slackId,
+            messages:[{text: 'hello bot multiple', isAssertion: true}]
+        }]).then((text)=>{
+            assert.equal(text, 'hello bot multiple');
+            done()
+        })
+    });
 });

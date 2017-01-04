@@ -21,6 +21,10 @@ module.exports = function(bot, controller){
         bot.reply(message, 'hello bot direct_message');
     });
 
+    controller.hears(['hello bot multiple'], ['direct_message', 'ambient', 'mention'], function(bot, message){
+        bot.reply(message, 'hello bot multiple');
+    });
+
     // simple conversation
 	controller.hears(['hi'], 'direct_message', function(bot, message){
 		bot.startConversation(message, function(response, convo){
