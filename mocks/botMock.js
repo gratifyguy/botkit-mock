@@ -216,7 +216,10 @@ class Controller {
         var self = this;
         // find action which will handle this message
         var action = self.actions.filter((obj) => {
-            let matchType = obj.type === message.type;
+            if (!Array.isArray(obj.type)) {
+                obj.type = obj.type.split(",");
+            }
+            let matchType = obj.type.indexOf(message.type) > -1;
             // each action has pattern
             let pattern = obj.pattern;
             if (Array.isArray(obj.pattern)) {
