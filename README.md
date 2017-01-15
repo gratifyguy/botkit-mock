@@ -1,6 +1,6 @@
 # README #
 
-botkit-mock - Write tests for Botkit.
+Botkit-Mock - Write tests for Botkit.
 
 ### Setup ###
 
