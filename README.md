@@ -58,15 +58,16 @@ describe("controller tests",()=>{
         testedFile(self.controller.bot, self.controller) // inject botMock into the file being tested
         done();
     });
-    it('should return `help message` if user types `help`', (done)=>{
+    it('should return `help message` if user types `help`', ()=>{
     	var self = this;
     	return self.controller.usersInput([{
                 first:true,
                 user: self.slackId,
                 messages:[{text: 'help', isAssertion:true}]
-            }]).then((text)=>{
+            }]).catch((err)=>{
+                return Promise.reject(err);
+            }).then((text)=>{
                 assert.equal(text, 'help message')
-                done()
             })
     });
 });
