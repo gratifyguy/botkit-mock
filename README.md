@@ -10,6 +10,8 @@ Botkit-Mock - Write tests for Botkit.
 4. Follow test case examples seen [here](https://github.com/gratifychat/botkit-mock/tree/master/test)
 
 ## Basic Usage ##
+
+### Testing Controllers ###
 In your `beforeEach`, setup a mock controller and pass it to `fileBeingTested`.
 
 ```
@@ -44,7 +46,7 @@ In your `it` statement, use the `controller.usersInput` method to define the con
     });
 });
 ```
-## Options ##
+### Options ###
 You can specify options to `usersInput`.
 
 `first` - indicates which user spoke first in multi-user testing.
@@ -53,6 +55,7 @@ You can specify options to `usersInput`.
 
 `isAssertion` - indicates which conversation response array to return in `.then()` in multi-user testing. 
 
-
+### Testing API ###
+See examples [here](https://github.com/gratifychat/botkit-mock/blob/master/test/apiMochaSpec.js).
 
 Built by the team at https://www.gratify.chat.
