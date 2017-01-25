@@ -6,11 +6,11 @@ Botkit-Mock - Write tests for Botkit.
 
 1. `npm install --save botkit-mock`
 2. Require `botkit-mock` in your test: ie `const mock = require('botkit-mock');`
-3. If testing a controller, require your controller in your test: ie `const fileBeingTested = require("../controllers/indexController") 
+3. If testing a controller, require your controller in your test: ie `const fileBeingTested = require("../controllers/indexController")`
 4. Follow test case examples seen [here](https://github.com/gratifychat/botkit-mock/tree/master/test)
 
 ## Basic Usage ##
-In your beforeEach, setup a mock controller and pass it to fileBeingTested.
+In your `beforeEach`, setup a mock controller and pass it to `fileBeingTested`.
 
 ```
 const assert = require('assert');
@@ -28,7 +28,7 @@ describe("controller tests",()=>{
     });
 ```
 
-In your it statement, use the controller.usersInput method to define the conversation.
+In your `it` statement, use the `controller.usersInput` method to define the conversation.
 
 ```
     it('should return hello', (done)=>{
@@ -43,10 +43,10 @@ In your it statement, use the controller.usersInput method to define the convers
         })
     });
 });
-
+```
 ## Options ##
 You can specify options to `usersInput`.
-```
+
 `first` - indicates which user spoke first in multi-user testing.
 
 `deep` - indicates the index of the conversation response to return in `.then()`. 0 is the last response, 1 is the second-to-last, etc..
