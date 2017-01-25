@@ -2,74 +2,57 @@
 
 Botkit-Mock - Write tests for Botkit.
 
-### Setup ###
+## Setup ##
 
-1. Clone repo
-2. Run `npm install`
-3. Run `npm run test_mocha` or `npm run test_jasmine`
-4. Copy `mocks` into your project root
+1. `npm install --save botkit-mock`
+2. Require `botkit-mock` in your test: ie `const mock = require('botkit-mock');`
+3. If testing a controller, require your controller in your test: ie `const fileBeingTested = require("../controllers/indexController") 
+4. Follow test case examples seen [here](https://github.com/gratifychat/botkit-mock/tree/master/test)
 
-### Flags ###
-`first` - indicates which user spoke first in multi-user testing.
-
-`deep` - indicates the index of the conversation response to return in `.then()`. 0 is the last response, 1 is the second-to-last, etc..
-
-`isAssertion` - indicates the conversation response array to return in `.then()` in multi-user testing. 
-
-### How To Use ###
-
-BotMock works by intercepting your normal Botkit instance.
-
-```
-var bot;
-if(env !== 'test'){
-    // your normal bot instance
-    bot = require('app/bots/bot');
-}
-
-else{
-    // your mock bot instance
-    var botMock =  require('mocks/botMock');
-    bot = new botMock.controller('userSlackId', 'userName').bot;
-}
-```
-
-Normal botkit function
-
-```
-controller.hears(['help'], 'direct_message', function(bot, message){
-    bot.reply(message, 'help message');
-});
-```
-
-Normal botkit function test
+## Basic Usage ##
+In your beforeEach, setup a mock controller and pass it to fileBeingTested.
 
 ```
 const assert = require('assert');
-const botMock = require('../mocks/botMock'); // require botmock
-const testedFile = require("../bot/indexController"); // require file you are testing
+const mock = require('botkit-mock');
+const fileBeingTested = require("../indexController");
 
 describe("controller tests",()=>{
     beforeEach((done)=>{
         var self = this;
-        self.slackId = 'test'
-        self.userName = 'test'
-        self.controller = new botMock.controller(self.slackId,self.userName) //instantiate botMock
-        testedFile(self.controller.bot, self.controller) // inject botMock into the file being tested
+        self.slackId = 'some id'
+        self.userName = 'some username'
+        self.controller = new mock.controller()
+        fileBeingTested(self.controller.bot,self.controller)
         done();
     });
-    it('should return `help message` if user types `help`', (done)=>{
-    	var self = this;
-    	return self.controller.usersInput([{
-                first:true,
-                user: self.slackId,
-                messages:[{text: 'help', isAssertion:true}]
-            }]).then((text)=>{
-                assert.equal(text, 'help message')
-                done()
-            })
+```
+
+In your it statement, use the controller.usersInput method to define the conversation.
+
+```
+    it('should return hello', (done)=>{
+        var self = this;
+        return self.controller.usersInput([{
+            type: null,
+            first:true,
+            messages:[{text: 'quick', isAssertion:true}]
+        }]).then((text)=>{
+            assert.equal(text, 'hello')
+            done();
+        })
     });
 });
+
+## Options ##
+You can specify options to `usersInput`.
 ```
+`first` - indicates which user spoke first in multi-user testing.
+
+`deep` - indicates the index of the conversation response to return in `.then()`. 0 is the last response, 1 is the second-to-last, etc..
+
+`isAssertion` - indicates which conversation response array to return in `.then()` in multi-user testing. 
+
+
 
 Built by the team at https://www.gratify.chat.

@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert');
-const botMock = require('../mocks/botMock');
-const testedFile = require("../bot/indexController");
+const botMock = require('../botkit-mock/botMock');
+const fileBeingTested = require("../controllers/indexController");
 
 describe("controller tests",()=>{
 	beforeEach((done)=>{
@@ -9,7 +9,7 @@ describe("controller tests",()=>{
         self.slackId = 'test'
         self.userName = 'test'
         self.controller =new botMock.controller(self.slackId,self.userName)
-        testedFile(self.controller.bot,self.controller)
+        fileBeingTested(self.controller.bot,self.controller)
         done();
     });
 

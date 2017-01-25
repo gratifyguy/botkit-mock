@@ -1,7 +1,7 @@
 {
   "name": "botkit-mock",
   "version": "0.0.1",
-  "description": "mock of botkit lib",
+  "description": "Write tests for botkit.",
   "main": "mocks/botMock.js",
   "scripts": {
     "test_mocha": "find ./test -name '*MochaSpec.js' | xargs mocha -t 2000 -R spec",
