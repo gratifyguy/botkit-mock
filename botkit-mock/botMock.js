@@ -173,6 +173,8 @@ class Controller {
         this.user = userId
         // create bot object
         this.bot = new Bot(this);
+        //link on bot.storage
+        this.storage = this.bot.botkit.storage;
         // store action which we wanna listen
         this.actions = [];
     }
