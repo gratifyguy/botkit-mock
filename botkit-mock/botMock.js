@@ -89,7 +89,6 @@ class Bot {
     }
 
     getAPILogByNumber(i) {
-        console.log('API CALLS =>', this.log)
         return this.log[i]
     }
 
@@ -114,11 +113,18 @@ class Bot {
 
     // reply to user and store reply in array
     reply(message, text, cb) {
-        console.log('bot reply =>', text)
         // check if this is first time then create anwers array
-        if (!this.detailedAnswers[message.user])
-            this.detailedAnswers[message.user] = []
-        this.detailedAnswers[message.user].push(text)
+        if(message.channel){
+            if(!this.detailedAnswers[message.channel]){
+                this.detailedAnswers[message.channel] = []
+            }
+            this.detailedAnswers[message.channel].push(text)
+        }
+        else{
+            if (!this.detailedAnswers[message.user])
+                this.detailedAnswers[message.user] = []
+            this.detailedAnswers[message.user].push(text)
+        }
         if (typeof cb === 'function') {
             cb({}, {})
         }
@@ -126,22 +132,29 @@ class Bot {
     // start new conversation
     startConversation(message, callback) {
         // creat enew convo object
-        this.convo = new Convo(this)
+        this.convo = new Convo(this);
         // setup convo owner
         this.convo.user = message.user;
         this.convo.sourceMessage.user = message.user;
         this.convo.sourceMessage.channel = message.user;
-        console.log('convo user => ', message.user)
         // store convo
-        this.convos.push(this.convo)
+        this.convos.push(this.convo);
         // invoke callback
         callback(null, this.convo)
     }
     //say mock - without logic
-    say(data, callback) {
-        if (!this.detailedAnswers[data.channel])
-            this.detailedAnswers[data.channel] = []
-        this.detailedAnswers[data.channel].push(data.text)
+    say(message, callback) {
+        if(message.channel){
+            if(!this.detailedAnswers[message.channel]){
+                this.detailedAnswers[message.channel] = []
+            }
+            this.detailedAnswers[message.channel].push(message.text)
+        }
+        else{
+            if (!this.detailedAnswers[message.user])
+                this.detailedAnswers[message.user] = [];
+            this.detailedAnswers[message.user].push(message.text)
+        }
         if (typeof callback === 'function') {
             callback(null, {
                 message: {}
@@ -160,6 +173,8 @@ class Controller {
         this.user = userId
         // create bot object
         this.bot = new Bot(this);
+        //link on bot.storage
+        this.storage = this.bot.botkit.storage;
         // store action which we wanna listen
         this.actions = [];
     }
@@ -191,6 +206,8 @@ class Controller {
                 msg = {
                     text: msg,
                 }
+
+            msg.type = (whoStartConvoWithBotFirst.type || 'direct_message');
                 // set message user
             msg.user = msg.user || whoStartConvoWithBotFirst.user
             // send first message
@@ -201,28 +218,30 @@ class Controller {
         var self = this;
         // find action which will handle this message
         var matches = [];
-        var action = self.actions.filter((obj, key) => {
+        var action = self.actions.filter((obj) => {
+            if (!Array.isArray(obj.type)) {
+                obj.type = obj.type.split(",");
+            }
+            let matchType = obj.type.indexOf(message.type) > -1;
             // each action has pattern
             let pattern = obj.pattern;
-
             if (Array.isArray(obj.pattern)) {
                 for (let i = 0;i < pattern.length;i++) {
                     if ((message.text || message).match(new RegExp(pattern[i], 'i'))) {
-                        matches[key] = (message.text || message).match(pattern[i]);
+                        matches.push((message.text || message).match(pattern[i]));
 
-                        return (message.text || message).match(new RegExp(pattern[i], 'i'));
+                        return (message.text || message).match(new RegExp(pattern[i], 'i')) && matchType;
                     }
                 }
             } else {
                 if ((message.text || message).match(new RegExp(pattern, 'i'))) {
-                    matches[key] = (message.text || message).match(new RegExp(pattern, 'i'))
+                    matches.push((message.text || message).match(new RegExp(pattern, 'i')) && matchType);
                 }
             }
 
-            return (message.text || message).match(new RegExp(pattern, 'i'));
+            return (message.text || message).match(new RegExp(pattern, 'i')) && matchType;
         })[0];
         if (action) {
-            console.log('message => ', message)
             // call action callback with bot and new message object
             action.callback(self.bot, {
                 user: message.user || self.user,
@@ -238,7 +257,6 @@ class Controller {
             if (message.isAssertion)
                 if (message.onEvent) {
                     setTimeout(() => {
-                        console.log('message => ', {})
                         // simple resolve without params if we handle onEvent messages ( when user join to channel and join to team or leave channel )
                         self.typeOptions.resolve()
                     }, 200)
@@ -291,7 +309,6 @@ class Convo {
             self.bot.detailedAnswers[self.user] = []
             // push bot message to answers array
         self.bot.detailedAnswers[self.user].push(message)
-        console.log('try find convo owner', self.bot.detailedAnswers)
         // find current typer by message.user
         var currentTyper = (self.bot.controller.allTypers || []).filter((typer) => {
             return typer.user == self.user;
@@ -301,7 +318,6 @@ class Convo {
             if (currentTyper.messages.length) {
                 // get last message
                 var messageNew = currentTyper.messages.shift()
-                console.log('process worker message => ', messageNew)
                 if (typeof(callbacks) == 'function' && (messageNew.text || messageNew.file)) {
                     // simple callback
                     callbacks({
@@ -313,7 +329,6 @@ class Convo {
                     var callback = callbacks.filter((c) => {
                         return (messageNew.text || '').toString().match(c.pattern)
                     })[0]
-                    console.log("callbacks => ", callbacks)
                     // check that message has text - we can`t send empty messages
                     if (messageNew.text || messageNew.file)
                     // invoke callback
@@ -359,15 +374,11 @@ class Convo {
 
                 if (messageNew.timeout && messageNew.isAssertion) {
                     return setTimeout(() => {
-                        console.log('make assertion timeout', self.user, messageNew)
                         self.bot.controller.typeOptions.resolve(self.bot.detailedAnswers[self.user][self.bot.detailedAnswers[self.user].length - 1 - (messageNew.deep || 0)])
                     }, messageNew.timeout)
                 }
                 if (messageNew.isAssertion && !messageNew.timeout) {
                     setTimeout(() => {
-                        console.log('make assertion', self.user, messageNew)
-                        console.log('make assertion', self.user)
-                        console.log('make assertion', self.bot.detailedAnswers)
                         self.bot.controller.typeOptions.resolve(self.bot.detailedAnswers[self.user][self.bot.detailedAnswers[self.user].length - 1 - (messageNew.deep || 0)])
                     }, 200)
                 }
@@ -377,7 +388,6 @@ class Convo {
 
         } else {
             // when can`t find typer by slack id
-            console.log('FAIL!!!')
         }
     }
     // simple say mock we just store answer in array
