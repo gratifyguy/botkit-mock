@@ -227,18 +227,18 @@ class Controller {
             if (Array.isArray(obj.pattern)) {
                 for (let i = 0;i < pattern.length;i++) {
                     if ((message.text || message).match(new RegExp(pattern[i], 'i'))) {
-                        message.match = (message.text || message).match(pattern);
+                        message.match = (message.text || message).match(pattern[i]);
 
                         return (message.text || message).match(new RegExp(pattern[i], 'i')) && matchType;
                     }
                 }
             } else {
                 if ((message.text || message).match(new RegExp(pattern, 'i'))) {
-                    message.match = (message.text || message).match(new RegExp(pattern, 'i')) && matchType;
+                    message.match = (message.text || message).match(new RegExp(pattern[i], 'i')) && matchType;
                 }
             }
 
-            return (message.text || message).match(new RegExp(pattern, 'i')) && matchType;
+            return (message.text || message).match(new RegExp(pattern[i], 'i')) && matchType;
         })[0];
         if (action) {
             // call action callback with bot and new message object
