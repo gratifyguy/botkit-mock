@@ -1,14 +1,12 @@
 {
   "name": "botkit-mock",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Write tests for botkit.",
   "main": "botkit-mock/botMock.js",
   "scripts": {
     "test_mocha": "find ./test -name '*MochaSpec.js' | xargs mocha -t 2000 -R spec",
     "test_jasmine": "find ./test -name '*JasmineSpec.js' | xargs jasmine-node"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "assert": "^1.4.1",
     "botkit": "^0.2.2",
@@ -23,5 +21,6 @@
     "botkit",
     "mock"
   ],
+  "author": "gratify.chat team",
   "license": "MIT"
 }
