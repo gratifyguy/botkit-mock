@@ -59,8 +59,3 @@ See examples [here](https://github.com/gratifychat/botkit-mock/blob/master/test/
 
 Built by the team at https://www.gratify.chat.
 
-## License
-
-And of course:
-
-MIT: http://rem.mit-license.org
