@@ -1,6 +1,5 @@
-# README #
-
-Botkit-Mock - Write tests for Botkit.
+# Botkit-Mock - Write tests for Botkit.
+[![npm](https://img.shields.io/npm/l/botkit.svg)](https://spdx.org/licenses/MIT)
 
 ## Setup ##
 
