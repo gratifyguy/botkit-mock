@@ -25,6 +25,10 @@ module.exports = function(bot, controller){
         bot.reply(message, 'hello bot multiple');
     });
 
+    controller.hears(['reply with typing'], 'direct_message', function(bot, message){
+        bot.replyWithTyping(message, 'hello reply with typing');
+    });
+
     // simple conversation
 	controller.hears(['hi'], 'direct_message', function(bot, message){
 		bot.startConversation(message, function(response, convo){
