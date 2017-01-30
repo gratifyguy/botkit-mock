@@ -217,6 +217,7 @@ class Controller {
     initialUserMessage(message, options) {
         var self = this;
         // find action which will handle this message
+        var matches = [];
         var action = self.actions.filter((obj) => {
             if (!Array.isArray(obj.type)) {
                 obj.type = obj.type.split(",");
@@ -227,14 +228,14 @@ class Controller {
             if (Array.isArray(obj.pattern)) {
                 for (let i = 0;i < pattern.length;i++) {
                     if ((message.text || message).match(new RegExp(pattern[i], 'i'))) {
-                        message.match = (message.text || message).match(pattern);
+                        matches.push((message.text || message).match(pattern[i]));
 
                         return (message.text || message).match(new RegExp(pattern[i], 'i')) && matchType;
                     }
                 }
             } else {
                 if ((message.text || message).match(new RegExp(pattern, 'i'))) {
-                    message.match = (message.text || message).match(new RegExp(pattern, 'i')) && matchType;
+                    matches.push((message.text || message).match(new RegExp(pattern, 'i')) && matchType);
                 }
             }
 
@@ -248,7 +249,7 @@ class Controller {
                 username: self.userName,
                 message: message.text,
                 text: message.text,
-                match: message.match,
+                match: matches.find((v) => v!=null),
                 //for controller.on
                 channel: message.channel || message.user || self.user
             })
