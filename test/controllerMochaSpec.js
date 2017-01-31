@@ -16,7 +16,7 @@ describe("controller tests",()=>{
     it('should return `help message` if user types `help`', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
-            //by if type null we using type: direct_message
+            //if type null, default to direct_message
             type: null,
             first:true,
             user: self.slackId,
@@ -31,7 +31,6 @@ describe("controller tests",()=>{
     it('should return `hey there` if a user types `hi`', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: null,
             first:true,
             user: self.slackId,
@@ -46,7 +45,6 @@ describe("controller tests",()=>{
     it('should return question `here a question` if user type any text after `hi`', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: null,
             first:true,
             user: self.slackId,
@@ -61,7 +59,6 @@ describe("controller tests",()=>{
     it('should return `..user typed any text after `hi`` if user types any text after `hi`', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: null,
             first:true,
             user: self.slackId,
@@ -78,7 +75,6 @@ describe("controller tests",()=>{
     it('should return `here a question` if user type any text after bot says `..user typed any text after `hi``', (done)=>{
 		var self = this;
 		return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: null,
             first:true,
             user: self.slackId,
@@ -93,7 +89,6 @@ describe("controller tests",()=>{
     it('should return `hello bot reply` (through bot.reply) in channel if user types `hello bot reply` in channel', (done)=>{
         var self = this;
         return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: null,
             first: true,
             user: self.slackId,
@@ -108,7 +103,6 @@ describe("controller tests",()=>{
     it('should return `hello bot say` (through bot.say) in channel if user types `hello bot say` in channel', (done)=>{
         var self = this;
         return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: null,
             first: true,
             user: self.slackId,
@@ -123,7 +117,6 @@ describe("controller tests",()=>{
     it('should return `hello bot direct_mention` if user types `hello bot direct` as direct_mention', (done)=>{
         var self = this;
         return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: 'direct_mention',
             first: true,
             user: self.slackId,
@@ -137,7 +130,6 @@ describe("controller tests",()=>{
     it('should return `hello bot direct_message` if user types `hello bot direct_message` as direct_message', (done)=>{
         var self = this;
         return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: 'direct_message',
             first: true,
             user: self.slackId,
@@ -151,7 +143,6 @@ describe("controller tests",()=>{
     it('should return `hello bot multiple` if user types `hello bot multiple` as direct_message', (done)=>{
         var self = this;
         return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: 'direct_message',
             first: true,
             user: self.slackId,
@@ -165,7 +156,6 @@ describe("controller tests",()=>{
     it('should return `hello bot multiple` if user types `hello bot multiple` as ambient', (done)=>{
         var self = this;
         return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: 'ambient',
             first: true,
             user: self.slackId,
@@ -179,13 +169,25 @@ describe("controller tests",()=>{
     it('should return `hello bot multiple` if user types `hello bot multiple` as mention', (done)=>{
         var self = this;
         return self.controller.usersInput([{
-            //by if type null we using type: direct_message
             type: 'mention',
             first: true,
             user: self.slackId,
             messages:[{text: 'hello bot multiple', isAssertion: true}]
         }]).then((text)=>{
             assert.equal(text, 'hello bot multiple');
+            done()
+        })
+    });
+
+    it('should return `hello reply with typing` if user types `reply with typing`', (done)=>{
+        var self = this;
+        return self.controller.usersInput([{
+            type: null,
+            first: true,
+            user: self.slackId,
+            messages:[{text: 'reply with typing', isAssertion: true}]
+        }]).then((text)=>{
+            assert.equal(text, 'hello reply with typing');
             done()
         })
     });

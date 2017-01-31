@@ -111,6 +111,22 @@ class Bot {
         return this.apiResponses.getData(key);
     }
 
+    startTyping(message, cb){
+        if (typeof cb === 'function') {
+            cb()
+        }
+    }
+
+    stopTyping(message, cb){
+        if (typeof cb === 'function') {
+            cb()
+        }
+    }
+
+    replyWithTyping(message, text){
+        this.reply(message, text)
+    }
+
     // reply to user and store reply in array
     reply(message, text, cb) {
         // check if this is first time then create anwers array
