@@ -415,6 +415,11 @@ class Convo {
     silentRepeat() {
 
     }
+
+    // mock for deactivate no logic
+    deactivate() {
+
+    }
 }
 module.exports = {
     bot: Bot,
