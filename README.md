@@ -52,6 +52,8 @@ You can specify options to `usersInput`.
 
 `deep` - indicates the index of the conversation response to return in `.then()`. 0 is the last response, 1 is the second-to-last, etc..
 
+`type` - specify botkit message type. IE `direct_message` or `message_received` 
+
 `isAssertion` - indicates which conversation response array to return in `.then()` in multi-user testing. 
 
 ### Testing API ###
