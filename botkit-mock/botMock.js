@@ -208,7 +208,6 @@ class Controller {
             if (!whoStartConvoWithBotFirst)
                 throw "No message was designated as the first message";
 
-
             // save all typers who will take action in conversation
             self.allTypers = userTypes;
             // save main typer ( first typer )
