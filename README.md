@@ -1,5 +1,7 @@
 # Botkit-Mock - Write tests for Botkit.
 [![npm](https://img.shields.io/npm/l/botkit.svg)](https://spdx.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/gratifychat/botkit-mock.svg?branch=master)](https://travis-ci.org/gratifychat/botkit-mock)
+
 
 ## Setup ##
 
