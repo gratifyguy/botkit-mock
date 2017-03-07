@@ -9,5 +9,5 @@ install:
   - npm install
 
 script:
-  - npm test_mocha
-  - npm test_jasmine
+  - npm run test_mocha
+  - npm run test_jasmine
