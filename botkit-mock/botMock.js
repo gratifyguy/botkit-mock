@@ -206,8 +206,9 @@ class Controller {
                 return userType.first;
             })[0]
             if (!whoStartConvoWithBotFirst)
-                throw "initiator missing"
-                // save all typers who will take action in conversation
+                throw "No message was designated as the first message";
+
+            // save all typers who will take action in conversation
             self.allTypers = userTypes;
             // save main typer ( first typer )
             self.mainTyper = whoStartConvoWithBotFirst;
