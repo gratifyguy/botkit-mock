@@ -4,3 +4,10 @@ node_js:
   - "6.9"
   - "4.6"
   - "stable"
+
+install:
+  - npm install
+
+script:
+  - npm test_mocha
+  - npm test_jasmine
