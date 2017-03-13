@@ -36,6 +36,9 @@ class Bot {
 
         this.callbacksHashByConvo = {};
 
+        //store interactive replies callbacks
+        this.interactiveRepliesCallbacks = [];
+
         this.botkit.storage = {
             teams: {
                 get: function(team_id, cb) {
@@ -145,6 +148,17 @@ class Bot {
             cb({}, {})
         }
     }
+    replyInteractive(message, text, cb) {
+        this.reply(message, text);
+        if (this.interactiveRepliesCallbacks[message.callback_id]) {
+            let result;
+            if (this.detailedAnswers[message.user]) {
+                result = this.detailedAnswers[message.user][this.detailedAnswers[message.user].length - 1];
+            }
+            this.interactiveRepliesCallbacks[message.callback_id](result);
+            delete this.interactiveRepliesCallbacks[message.callback_id];
+        }
+    }
     // start new conversation
     startConversation(message, callback) {
         // creat enew convo object
@@ -193,6 +207,29 @@ class Controller {
         this.storage = this.bot.botkit.storage;
         // store action which we wanna listen
         this.actions = [];
+        //store events we want to listen
+        this.events = [];
+    }
+    interactiveMessage(message) {
+        if (!message.callback_id)
+            throw "Missing callback_id";
+        return new Promise((resolve, reject) => {
+            let relevantEvents = this.events.filter((eventListener) => {
+                return eventListener.event == 'interactive_message_callback';
+            });
+
+            if (relevantEvents.length == 0) {
+                resolve();
+                return;
+            }
+
+            if (!this.bot.interactiveRepliesCallbacks[message.callback_id])
+                this.bot.interactiveRepliesCallbacks[message.callback_id] = [];
+
+            this.bot.interactiveRepliesCallbacks[message.callback_id] = resolve;
+            //Only support one event listener
+            relevantEvents[0].callback(this.bot, message);
+        });
     }
     // allow multiple convos
     // need refactor return promise
@@ -301,9 +338,12 @@ class Controller {
             callback: callbacks
         });
     }
-    // alias for hears
+    // mock for event listeners
     on(event, callback) {
-        this.hears(event, 'direct_message', callback)
+        this.events.push({
+            event: event,
+            callback: callback
+        });
     }
 }
 // convo object
@@ -430,6 +470,11 @@ class Convo {
     }
     // mock for silentRepeat no logic
     silentRepeat() {
+
+    }
+
+    // mock for deactivate no logic
+    deactivate() {
 
     }
 }
