@@ -16,7 +16,7 @@
 
 Let's say you have a controller that looks something like this:
 
-```
+```javascript
 module.exports = function(bot, controller) {
     // simple answer
     controller.hears(['help'], 'direct_message', function (bot, message) {
@@ -27,15 +27,15 @@ module.exports = function(bot, controller) {
 
 To use `botkit-mock`, you should setup your controller as follows in your `beforeEach`:
 
-```
+```javascript
 const mock = require('botkit-mock');
 const yourController = require("../yourController");
 
 describe("controller tests",()=>{
     beforeEach((done)=>{
         var self = this;
-        self.controller = new mock.controller()
-        yourController(self.controller.bot, self.controller)
+        self.controller = new mock.controller();
+        yourController(self.controller.bot, self.controller);
         done();
     });
 });
@@ -43,7 +43,7 @@ describe("controller tests",()=>{
 
 In your `it` statement, use the `controller.usersInput` method to define the conversation.
 
-```
+```javascript
 it('should return `help message` if user types `help`', (done) => {
     var self = this;
     return self.controller.usersInput(
@@ -58,7 +58,7 @@ it('should return `help message` if user types `help`', (done) => {
             }
         ]
     ).then((text) => {
-        assert.equal(text, 'help message')
+        assert.equal(text, 'help message');
         done()
     })
 });
