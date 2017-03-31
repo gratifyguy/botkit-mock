@@ -45,8 +45,7 @@ In your `it` statement, use the `controller.usersInput` method to define the con
 
 ```javascript
 it('should return `help message` if user types `help`', (done) => {
-    var self = this;
-    return self.controller.usersInput(
+    return this.bot.usersInput(
         [
             {
                 user: 'someUserId',
