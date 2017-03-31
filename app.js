@@ -15,7 +15,7 @@ var bot = controller.spawn({
     token: process.env.token
 });
 
-require('./bot/indexController')(bot, controller);
+require('./bot/indexController')(controller);
 
 bot.startRTM((err, bot, res) => {
     if (err)

@@ -1,7 +1,7 @@
-module.exports = function(bot, controller){
+module.exports = function(controller){
 	// simple answer
 	controller.hears(['help'], 'direct_message', function(bot, message){
-	    bot.reply(message, 'help message');
+        bot.reply(message, 'help message');
     });
 
     controller.hears(['hello bot reply'], 'direct_message', function(bot, message){
@@ -37,7 +37,7 @@ module.exports = function(bot, controller){
 				convo.ask('here a question', function(response, convo){
 					convo.say('here an answer');
 					convo.next();
-				})
+				});
 				convo.next();
 			})
 		})

@@ -6,7 +6,7 @@
 ## Setup ##
 
 1. `npm install --save botkit-mock`
-2. Require `botkit-mock` in your test: `const mock = require('botkit-mock');`
+2. Require `botkit-mock` in your test: `const Botmock = require('botkit-mock');`
 3. Require your controller in your test: `const fileBeingTested = require("../controllers/indexController")`
 4. Follow test case examples seen [here](https://github.com/gratifychat/botkit-mock/tree/master/test)
 
@@ -17,7 +17,7 @@
 Let's say you have a controller that looks something like this:
 
 ```javascript
-module.exports = function(bot, controller) {
+module.exports = function(controller) {
     // simple answer
     controller.hears(['help'], 'direct_message', function (bot, message) {
         bot.reply(message, 'help message');
@@ -28,14 +28,14 @@ module.exports = function(bot, controller) {
 To use `botkit-mock`, you should setup your controller as follows in your `beforeEach`:
 
 ```javascript
-const mock = require('botkit-mock');
+const Botmock = require('botkit-mock');
 const yourController = require("../yourController");
 
 describe("controller tests",()=>{
     beforeEach((done)=>{
-        var self = this;
-        self.controller = new mock.controller();
-        yourController(self.controller.bot, self.controller);
+        this.controller = Botmock({});
+        this.bot = this.controller.spawn({type: 'slack'});
+        yourController(this.controller);
         done();
     });
 });
@@ -49,7 +49,8 @@ it('should return `help message` if user types `help`', (done) => {
     return self.controller.usersInput(
         [
             {
-                first: true,
+                user: 'someUserId',
+                channel: 'someChannel',
                 messages: [
                     {
                         text: 'help', isAssertion: true
@@ -57,8 +58,14 @@ it('should return `help message` if user types `help`', (done) => {
                 ]
             }
         ]
-    ).then((text) => {
-        assert.equal(text, 'help message');
+    ).then((message) => {
+        //in message we receive full object include
+        //{
+        //    user: 'someUserId',
+        //    channel: 'someChannel',
+        //    text: 'help message',
+        //}
+        assert.equal(message.text, 'help message');
         done()
     })
 });
@@ -68,16 +75,17 @@ it('should return `help message` if user types `help`', (done) => {
 `usersInput` takes an array of objects with the following fields:
 
 **Mandatory**
-- `first` indicates which user spoke first in multi-user testing.
-- `messages` is an array of objects that have two fields
-    - `text` is the text of the message (Mandatory)
+- `user` user slackId (required)
+- `channel` is a channel where user send messages (required)
+- `type` specify botkit message type. IE `direct_message`, `message_received`, `interactive_message_callback` etc...
+    (if `null` or `undefined` be default set to `direct_message`)
+- `messages` is an array of objects that have fields
     - `isAssertion` indicates which conversation response array to return in `.then()` in multi-user testing.
-    - `channel` indicates the channel the message was sent in
-
-**Optional**
-- `type` specify botkit message type. IE `direct_message` or `message_received` 
-- `user` specifies the userId of the user sending the message
-- `deep` indicates the index of the conversation response to return in `.then()`. 0 is the last response, 1 is the second-to-last, etc..
+    - `deep` indicates the index of the conversation response to return in `.then()`. 0 is the last response, 1 is the second-to-last, etc..
+    - *** optional ***
+    - `text` is the text of the message user message
+    - `channel` indicates the channel the message was sent in, ignore channel defined on top level, only for current message
+    - any field that can be received, `attachments`, `origing_mesassage`, `callback_id` etc...
 
 
 ### Testing API ###

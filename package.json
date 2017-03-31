@@ -9,9 +9,12 @@
   },
   "devDependencies": {
     "assert": "^1.4.1",
-    "botkit": "^0.2.2",
     "jasmine-node": "^1.14.5",
     "mocha": "^2.4.5"
+  },
+  "dependencies":{
+    "botkit": "^0.5.2",
+    "async": "^2.1.5"
   },
   "repository": {
     "type": "git",
