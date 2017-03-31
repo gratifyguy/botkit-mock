@@ -6,7 +6,7 @@ function defaultExtender(bot, botkit, config){
     // extending...
 }
 
-function BotMockWorker(botkit, config){
+function BotmockWorker(botkit, config){
     var bot = {
         type: config.type,
         botkit: botkit,
@@ -156,4 +156,4 @@ function BotMockWorker(botkit, config){
     return bot;
 }
 
-module.exports = BotMockWorker;
+module.exports = BotmockWorker;

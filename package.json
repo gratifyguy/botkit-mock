@@ -2,7 +2,7 @@
   "name": "botkit-mock",
   "version": "0.0.6",
   "description": "Write tests for botkit.",
-  "main": "botkit-mock/botMock.js",
+  "main": "botkit-mock/index.js",
   "scripts": {
     "test_mocha": "find ./test -name '*MochaSpec.js' | xargs mocha -t 2000 -R spec",
     "test_jasmine": "find ./test -name '*JasmineSpec.js' | xargs jasmine-node"
