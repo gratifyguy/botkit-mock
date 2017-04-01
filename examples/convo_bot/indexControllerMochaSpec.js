@@ -1,6 +1,7 @@
 'use strict';
-const Botmock = require('../botkit-mock');
-const fileBeingTested = require("../controllers/indexController");
+const assert = require('assert');
+const Botmock = require('../../lib/Botmock');
+const fileBeingTested = require("./indexController");
 
 describe("controller tests",()=>{
     afterEach(()=>{
@@ -26,7 +27,7 @@ describe("controller tests",()=>{
         done()
     });
 
-    it('should return `help message` if user types `help`', (done)=>{
+    it('should return `help message` if user types `help`', ()=>{
         let sequence = [
             {
                 //type: null, //if type null, default to direct_message
@@ -42,12 +43,11 @@ describe("controller tests",()=>{
         ];
 
 		return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('help message');
-            done();
-        }).catch(done)
+            return assert.equal(message.text, 'help message');
+        })
     });
 
-    it('should return `hey there` if a user types `hi`', (done)=>{
+    it('should return `hey there` if a user types `hi`', ()=>{
         let sequence = [
             {
                 type: null, //if type null, default to direct_message
@@ -63,12 +63,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('hey there');
-            done();
-        }).catch(done)
+           return assert.equal(message.text, 'hey there');
+        })
     });
 
-    it('should return question `here a question` if user type any text after `hi`', (done)=>{
+    it('should return question `here a question` if user type any text after `hi`', ()=>{
         let sequence = [
             {
                 type: null, //if type null, default to direct_message
@@ -87,12 +86,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('here a question');
-            done();
-        }).catch(done)
+            return assert.equal(message.text, 'here a question');
+        });
     });
 
-    it('should return `..user typed any text after `hi`` if user types any text after `hi`', (done)=>{
+    it('should return `..user typed any text after `hi`` if user types any text after `hi`', ()=>{
         let sequence = [
             {
                 type: null, //if type null, default to direct_message
@@ -114,12 +112,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('..user typed any text after `hi`');
-            done();
-        }).catch(done)
+            return assert.equal(message.text, '..user typed any text after `hi`');
+        });
     });
 
-    it('should return `here a question` if user type any text after bot says `..user typed any text after `hi``', (done)=>{
+    it('should return `here a question` if user type any text after bot says `..user typed any text after `hi``', ()=>{
         let sequence = [
             {
                 type: null, //if type null, default to direct_message
@@ -141,12 +138,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('here an answer');
-            done();
-        }).catch(done);
+            return assert.equal(message.text, 'here an answer');
+        });
     });
 
-    it('should return `hello bot reply` (through bot.reply) in channel if user types `hello bot` in channel', (done)=>{
+    it('should return `hello bot reply` (through bot.reply) in channel if user types `hello bot` in channel', ()=>{
         let sequence = [
             {
                 type: null, //if type null, default to direct_message
@@ -164,14 +160,12 @@ describe("controller tests",()=>{
             }
         ];
 
-        return this.bot.usersInput(sequence).then((message)=>{
-            expect(this.bot.detailed_answers[this.userInfo.channel][0].text).toBe('hello bot reply');
-            done();
-        }).catch(done);
-
+        return this.bot.usersInput(sequence).then(()=>{
+            return assert.equal(this.bot.detailed_answers[this.userInfo.channel][0].text, 'hello bot reply');
+        });
     });
 
-    it('should return `hello bot say` (through bot.say) in channel if user types `hello bot` in channel', (done)=>{
+    it('should return `hello bot say` (through bot.say) in channel if user types `hello bot` in channel', ()=>{
         let sequence = [
             {
                 type: null, //if type null, default to direct_message
@@ -189,13 +183,12 @@ describe("controller tests",()=>{
             }
         ];
 
-        return this.bot.usersInput(sequence).then((message)=>{
-            expect(this.bot.detailed_answers[this.userInfo.channel][0].text).toBe('hello bot say');
-            done();
-        }).catch(done);
+        return this.bot.usersInput(sequence).then(()=>{
+            return assert.equal(this.bot.detailed_answers[this.userInfo.channel][0].text, 'hello bot say');
+        });
     });
 
-    it('should return `hello bot direct_mention` if user types `hello bot direct` as direct_mention', (done)=>{
+    it('should return `hello bot direct_mention` if user types `hello bot direct` as direct_mention', ()=>{
         let sequence = [
             {
                 type: 'direct_mention', //if type null, default to direct_message
@@ -211,12 +204,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('hello bot direct_mention');
-            done();
-        }).catch(done);
+            return assert.equal(message.text, 'hello bot direct_mention');
+        });
     });
 
-    it('should return `hello bot direct_message` if user types `hello bot direct_message` as direct_message', (done)=>{
+    it('should return `hello bot direct_message` if user types `hello bot direct_message` as direct_message', ()=>{
         let sequence = [
             {
                 type: 'direct_message', //if type null, default to direct_message
@@ -232,12 +224,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('hello bot direct_message');
-            done();
-        }).catch(done);
+            return assert.equal(message.text, 'hello bot direct_message');
+        });
     });
 
-    it('should return `hello bot multiple` if user types `hello bot multiple` as direct_message', (done)=>{
+    it('should return `hello bot multiple` if user types `hello bot multiple` as direct_message', ()=>{
         let sequence = [
             {
                 type: 'direct_message', //if type null, default to direct_message
@@ -253,12 +244,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('hello bot multiple');
-            done();
-        }).catch(done);
+            return assert.equal(message.text, 'hello bot multiple');
+        });
     });
 
-    it('should return `hello bot multiple` if user types `hello bot multiple` as ambient', (done)=>{
+    it('should return `hello bot multiple` if user types `hello bot multiple` as ambient', ()=>{
         let sequence = [
             {
                 type: 'ambient', //if type null, default to direct_message
@@ -274,12 +264,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('hello bot multiple');
-            done();
-        }).catch(done);
+            return assert.equal(message.text, 'hello bot multiple');
+        });
     });
 
-    it('should return `hello bot multiple` if user types `hello bot multiple` as mention', (done)=>{
+    it('should return `hello bot multiple` if user types `hello bot multiple` as mention', ()=>{
         let sequence = [
             {
                 type: 'mention', //if type null, default to direct_message
@@ -295,12 +284,11 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('hello bot multiple');
-            done();
-        }).catch(done);
+            return assert.equal(message.text, 'hello bot multiple');
+        });
     });
 
-    it('should return `hello reply with typing` if user types `reply with typing`', (done)=>{
+    it('should return `hello reply with typing` if user types `reply with typing`', ()=>{
         let sequence = [
             {
                 type: null, //if type null, default to direct_message
@@ -316,8 +304,7 @@ describe("controller tests",()=>{
         ];
 
         return this.bot.usersInput(sequence).then((message)=>{
-            expect(message.text).toBe('hello reply with typing');
-            done();
-        }).catch(done);
+            return assert.equal(message.text, 'hello reply with typing');
+        })
     });
 });

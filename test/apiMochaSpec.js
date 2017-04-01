@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const Botmock = require('../botkit-mock');
+const Botmock = require('../lib/Botmock');
 
 describe('test default response for actions', ()=>{
     beforeEach(()=>{

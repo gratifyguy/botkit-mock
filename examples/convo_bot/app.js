@@ -1,5 +1,8 @@
 'use strict';
-
+/*
+Run your bot from the command line:
+token=<MY TOKEN> node app.js
+*/
 if (!process.env.token) {
   console.log('Error: Specify token in environment');
   process.exit(1);
@@ -15,7 +18,7 @@ var bot = controller.spawn({
     token: process.env.token
 });
 
-require('./bot/indexController')(controller);
+require('./indexController')(controller);
 
 bot.startRTM((err, bot, res) => {
     if (err)
