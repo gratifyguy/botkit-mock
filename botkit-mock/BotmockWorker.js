@@ -79,7 +79,7 @@ function BotmockWorker(botkit, config){
     // endregion
 
     bot.usersInput = function(sequence){
-        let questions = [];
+        var questions = [];
 
         sequence.forEach(function(userMessage){
             userMessage.messages.forEach(function (message){
