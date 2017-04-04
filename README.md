@@ -86,6 +86,9 @@ it('should return `help message` if user types `help`', (done) => {
     - `channel` indicates the channel the message was sent in, ignore channel defined on top level, only for current message
     - any field that can be received, `attachments`, `origing_mesassage`, `callback_id` etc...
 
+### Examples ###
+- [botkit-starter-slack](examples/botkit-starter-slack) - tests for [botkit starter kit](https://github.com/howdyai/botkit-starter-slack) 
+- [convo_bot](examples/convo_bot) - tests for simple bot convo 
 
 ### Testing API ###
 See examples [here](https://github.com/gratifychat/botkit-mock/blob/master/test/apiMochaSpec.js).

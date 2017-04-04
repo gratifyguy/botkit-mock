@@ -1,7 +1,7 @@
 'use strict';
 const Botmock = require('../lib/Botmock');
 
-describe('test default response for actions', ()=>{
+describe('tests default response for actions', ()=>{
     beforeEach(()=>{
         this.controller = Botmock({
             debug: false,
