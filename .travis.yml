@@ -7,12 +7,12 @@ node_js:
 
 install:
   - npm install
-  - cd examples/botkit-starter-slack && npm install
-  - cd examples/convo_bot && npm install
+  - npm install --prefix ./examples/botkit-starter-slack
+  - npm install --prefix ./examples/convo_bot
 
 script:
   - npm run test_mocha
   - npm run test_jasmine
-  - cd examples/botkit-starter-slack && npm test
-  - cd examples/convo_bot && npm run test_mocha
-  - cd examples/convo_bot && npm run test_jasmine
+  - npm test --prefix ./examples/botkit-starter-slack
+  - npm run test_mocha --prefix ./examples/convo_bot
+  - npm run test_jasmine --prefix ./examples/convo_bot
