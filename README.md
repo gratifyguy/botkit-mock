@@ -37,7 +37,6 @@ describe("controller tests",()=>{
         // type can be ‘slack’, facebook’, or null
         this.bot = this.controller.spawn({type: 'slack'});
         yourController(this.controller);
-        done();
     });
 });
 ```
@@ -60,11 +59,11 @@ it('should return `help message` if user types `help`', (done) => {
         ]
     ).then((message) => {
         // In message, we receive a full object that includes params:
-        //{
+        // {
         //    user: 'someUserId',
         //    channel: 'someChannel',
         //    text: 'help message',
-        //}
+        // }
         assert.equal(message.text, 'help message');
         done()
     })
@@ -74,46 +73,43 @@ it('should return `help message` if user types `help`', (done) => {
 
 `botExtender` - allows developers to extend the bot and add custom functions to the `bot`. This overrides functionality in [BotmockWorker.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/BotmockWorker.js).
 
-To use this, define `botExtender` in your `beforeEach`. It accepts three parameters, which are passed in from [Botmock.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/Botmock.js) and [BotmockWorker.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/BotmockWorker.js). Pass `botExtender` to your `.spawn()` and you will have access to your custom functions in the `it`!
+To use this, define `botExtender` in your `beforeEach`. It accepts three parameters `(bot, botkit, config)`, which are passed in from [Botmock.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/Botmock.js) and [BotmockWorker.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/BotmockWorker.js). Pass `botExtender` to your `.spawn()` and you will have access to your custom functions in the `it`.
 
-botExtender params:
-1. `bot`
-2. `botkit`
-3. `config` 
-
-
-    ```javascript
-    beforeEach(()=>{
-            function botExtender(bot, botkit, config){
-                bot.customReply = function(message, text){
-                    bot.reply(message, 'Something new...' + text)
-                }
+```javascript
+beforeEach(()=>{
+        function botExtender(bot, botkit, config){
+            bot.customReply = function(message, text){
+                bot.reply(message, 'Something new...' + text)
             }
-            this.bot = this.controller.spawn({type: 'slack', botExtender: botExtender});
-        });
-    ```
+        }
+        this.bot = this.controller.spawn({type: 'slack', botExtender: botExtender});
+    });
+```
 
 ## usersInput options
 1. `user` user slackId (required) (string)
 2. `channel` is a channel where user sends messages (required) (string)
 3. `type` specify botkit message type. ie `direct_message`, `message_received`, `interactive_message_callback`. (defaults to `direct_message`) (string)
 4. `messages` (array) that includes:
-    - `isAssertion` indicates which conversation response array to return in `.then()` in multi-user testing. (required)
-    - `deep` indicates the index of the conversation response to return in `.then()`. 0 (default) is the last response, 1 is the second-to-last, etc..
-    - `timeout` set timeout for message in milliseconds
-    - `text` the message's text
-    - `channel` indicates the channel the message was sent in. This overrides the channel defined in `usersInput` for this current message.
-    - ...other fields you may be testing for including `attachments`, `callback_id`, etc.
+    - `isAssertion` indicates which conversation response array to return in `.then()` in multi-user testing. (required) (boolean)
+    - `deep` indicates the index of the conversation response to return in `.then()`. 0 (default) is the last response, 1 is the second-to-last, etc.. (integer)
+    - `timeout` set timeout for message in milliseconds (integer)
+    - `text` the message's text (string)
+    - `channel` indicates the channel the message was sent in. This overrides the channel defined in `usersInput` for this current message. (string)
+    - ...any other fields you may be testing for including `attachments`, `callback_id`, etc...
 
 
 ## Contributing ##
-`botkit-mock` currently (and will always) support all of Botkit's core functionality by default. We also support all Slack functionality that we're aware of. We support basic Facebook usage, but will need iterations on [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js) to add functionality for advanced cases. `botkit-mock` can easily be extended as Botkit continues to expand into different bot channels. If you add functionality to support something we don't, please make a PR.
+`botkit-mock` currently (and will always) support all of Botkit's core functionality by default. We also support extended Slack and Facebook functionality. 
+
+To add functionality to `botkit-mock`, you can create platform-specific functions like seen in [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js) If you add functionality to support something we don't, please make a PR.
 
 ## Examples ##
 
 - [botkit-starter-slack](examples/botkit-starter-slack) - tests for [botkit starter kit](https://github.com/howdyai/botkit-starter-slack) (files with name `*mochaSpec.js`)
 - [convo_bot](examples/convo_bot) - tests for simple bot convo  (files with name `*MochaSpec.js` or `*JasmineSpec.js`)
 - [api](./tests/updateApiResponseMochaSpec.js) - simple api calls and api response overrides
+
 
 Built by the team at https://www.gratify.chat.
 
