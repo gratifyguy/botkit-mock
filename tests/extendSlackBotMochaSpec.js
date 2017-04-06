@@ -11,7 +11,7 @@ describe('extendSlackBot', ()=>{
 
             function botExtender(bot, botkit, config){
                 bot.customReply = function(message, text){
-                    bot.reply(message, 'custom ' + text)
+                    bot.reply(message, 'Something new... ' + text)
                 }
             }
 
