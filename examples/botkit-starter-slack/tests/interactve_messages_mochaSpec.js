@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert');
 const Botmock = require('../../../lib/Botmock');
-const fileBeingTested = require("./interactve_messages");
+const fileBeingTested = require("../skills/interactve_messages");
 
 describe('interactive_message_callback', function(){
     afterEach(function(){

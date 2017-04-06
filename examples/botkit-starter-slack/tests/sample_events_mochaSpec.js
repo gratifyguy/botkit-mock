@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert');
 const Botmock = require('../../../lib/Botmock');
-const fileBeingTested = require("./sample_events");
+const fileBeingTested = require("../skills/sample_events");
 
 describe('sample_events', function(){
     afterEach(function(){
@@ -58,13 +58,3 @@ describe('sample_events', function(){
         });
     });
 });
-
-module.exports = function(controller) {
-
-    controller.on('user_channel_join,user_group_join', function(bot, message) {
-
-        bot.reply(message, 'Welcome, <@' + message.user + '>');
-
-    });
-
-}

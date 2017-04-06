@@ -8,11 +8,9 @@ node_js:
 install:
   - npm install
   - npm install --prefix ./examples/botkit-starter-slack
-  - npm install --prefix ./examples/convo_bot
+  - npm install --prefix ./examples/convo-bot
 
 script:
-  - npm run test_mocha
-  - npm run test_jasmine
+  - npm run test
   - npm test --prefix ./examples/botkit-starter-slack
-  - npm run test_mocha --prefix ./examples/convo_bot
-  - npm run test_jasmine --prefix ./examples/convo_bot
+  - npm test --prefix ./examples/convo-bot

@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert');
 const Botmock = require('../../../lib/Botmock');
-const fileBeingTested = require("./sample_taskbot");
+const fileBeingTested = require("../skills/sample_taskbot");
 
 describe('sample_task_bot', function(){
     function generateTaskList(tasks) {

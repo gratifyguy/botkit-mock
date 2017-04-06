@@ -7,7 +7,7 @@
 
 1. `npm install --save botkit-mock`
 2. Require `botkit-mock` in your test: `const Botmock = require('botkit-mock');`
-3. Require your controller in your test: `const fileBeingTested = require("../controllers/indexController")`
+3. Require your controller in your test: `const fileBeingTested = require("./indexController")`
 4. Follow test case examples seen [here](/examples)
 
 ## Basic Usage ##
@@ -29,12 +29,12 @@ To use `botkit-mock`, you should setup your controller as follows in your `befor
 
 ```javascript
 const Botmock = require('botkit-mock');
-const yourController = require("../yourController");
+const yourController = require("./yourController");
 
 describe("controller tests",()=>{
     beforeEach((done)=>{
         this.controller = Botmock({});
-        // type can be slack, facebook or null (it's mean you add your custom bot extender)
+        // type can be ‘slack’, facebook’, or null
         this.bot = this.controller.spawn({type: 'slack'});
         yourController(this.controller);
         done();
@@ -42,7 +42,7 @@ describe("controller tests",()=>{
 });
 ```
 
-In your `it` statement, use the `controller.usersInput` method to define the conversation.
+In your `it` statement, use the `bot.usersInput` method to define the conversation.
 
 ```javascript
 it('should return `help message` if user types `help`', (done) => {
@@ -100,15 +100,7 @@ Provide a method `usersInput` takes an array of objects with the following field
     - `channel` indicates the channel the message was sent in, ignore channel defined on top level, only for current message
     - any field that can be received, `attachments`, `origing_mesassage`, `callback_id` etc...
 
-Return promise. The promise argument gets a message
-```javascript
-{
-    user: 'someUserId',
-    channel: 'someChannel',
-    text: 'help message',
-    // any field that can be received, `attachments`, `origing_mesassage`, `callback_id` etc...
-}
-```
+
 ## Examples ##
 
 - [botkit-starter-slack](examples/botkit-starter-slack) - tests for [botkit starter kit](https://github.com/howdyai/botkit-starter-slack) (files with name `*mochaSpec.js`)

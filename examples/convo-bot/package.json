@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "test": "npm run test_mocha && npm run test_jasmine",
     "test_mocha": "find ./ -name '*MochaSpec.js' | xargs mocha -t 2000 -R spec",
     "test_jasmine": "find ./ -name '*JasmineSpec.js' | xargs jasmine-node"
   },

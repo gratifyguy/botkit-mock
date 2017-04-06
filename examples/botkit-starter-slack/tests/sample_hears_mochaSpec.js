@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert');
 const Botmock = require('../../../lib/Botmock');
-const fileBeingTested = require("./sample_hears");
+const fileBeingTested = require("../skills/sample_hears");
 
 describe('sample_hears', function(){
     afterEach(function(){
