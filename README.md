@@ -32,8 +32,8 @@ const Botmock = require('botkit-mock');
 const yourController = require("./yourController");
 
 describe("controller tests",()=>{
-    beforeEach((done)=>{
-        this.bot = Botmock({});
+    beforeEach(()=>{
+        this.controller = Botmock({});
         // type can be ‘slack’, facebook’, or null
         this.bot = this.controller.spawn({type: 'slack'});
         yourController(this.controller);
@@ -44,7 +44,7 @@ describe("controller tests",()=>{
 In your `it` statement, use the `bot.usersInput` method to define the conversation.
 
 ```javascript
-it('should return `help message` if user types `help`', (done) => {
+it('should return `help message` if user types `help`', () => {
     return this.bot.usersInput(
         [
             {
@@ -64,8 +64,7 @@ it('should return `help message` if user types `help`', (done) => {
         //    channel: 'someChannel',
         //    text: 'help message',
         // }
-        assert.equal(message.text, 'help message');
-        done()
+        return assert.equal(message.text, 'help message');
     })
 });
 ```

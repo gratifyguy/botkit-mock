@@ -1,6 +1,6 @@
 {
   "name": "botkit-mock",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Write tests for botkit.",
   "main": "lib/Botmock.js",
   "scripts": {
