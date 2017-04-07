@@ -24,7 +24,7 @@ describe('extendSlackBot', ()=>{
                 channel: 'some channel'
             };
             this.bot.customReply(this.userMessage, 'hello');
-            assert.equal(this.bot.detailed_answers[this.userMessage.channel][0].text, 'custom hello');
+            assert.equal(this.bot.detailed_answers[this.userMessage.channel][0].text, 'Something new... hello');
         });
     });
 });
