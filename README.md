@@ -101,7 +101,7 @@ beforeEach(()=>{
 ## Contributing ##
 `botkit-mock` currently (and will always) support all of Botkit's core functionality by default. We also support extended Slack and Facebook functionality. 
 
-To add functionality to `botkit-mock`, you can create platform-specific functions like seen in [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js) If you add functionality to support something we don't, please make a PR.
+To add functionality to `botkit-mock`, you can create platform-specific functions like seen in [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js). If you add functionality to support something we don't, please make a PR.
 
 ## Examples ##
 
