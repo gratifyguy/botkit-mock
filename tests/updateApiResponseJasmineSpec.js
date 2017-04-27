@@ -72,7 +72,7 @@ describe('change api data for action with extending', ()=>{
 
     it('users.list call', (done)=>{
         this.bot.api.callAPI('users.list', {}, (err, data)=>{
-            expect(data.members[1]['id']).toBe('3');
+            expect(data.members[data.members.length - 1]['id']).toBe('3');
             done()
         });
     });

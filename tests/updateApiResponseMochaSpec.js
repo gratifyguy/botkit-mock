@@ -73,7 +73,7 @@ describe('change api data for action with extending', ()=>{
 
     it('users.list call', (done)=>{
         this.bot.api.callAPI('users.list', {}, (err, data)=>{
-            assert.equal(data.members[1]['id'], '3')
+            assert.equal(data.members[data.members.length - 1]['id'], '3')
             done()
         });
     });
