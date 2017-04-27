@@ -86,3 +86,32 @@ describe('change api data for action with extending', ()=>{
     });
 });
 
+
+describe('api urls', ()=>{
+    beforeEach(()=>{
+        this.controller = Botmock({
+            debug: false,
+        });
+        this.bot = this.controller.spawn({type: 'slack'});
+    });
+
+    it('should return null on undefined url', (done)=>{
+        this.bot.api.callAPI('holo.molo', {}, (err, data)=>{
+            assert.equal(data, null);
+            done();
+        });
+    });
+
+    describe('add a new url to storage', ()=>{
+        beforeEach(()=>{
+           this.bot.api.setData('holo.molo', {ok: true})
+        });
+
+        it('should return correct response', (done)=>{
+            this.bot.api.callAPI('holo.molo', {}, (err, data)=>{
+                assert.deepEqual(data, {ok: true});
+                done()
+            });
+        });
+    })
+});
