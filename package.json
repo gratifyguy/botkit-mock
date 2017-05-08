@@ -1,6 +1,6 @@
 {
   "name": "botkit-mock",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Write tests for botkit.",
   "main": "lib/Botmock.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "jasmine-node": "^1.14.5",
     "mocha": "^2.4.5"
   },
-  "dependencies":{
+  "dependencies": {
     "botkit": "^0.5.2",
     "async": "^2.1.5"
   },
