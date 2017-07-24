@@ -85,3 +85,37 @@ describe('change api data for action with extending', ()=>{
     });
 });
 
+describe('mock api error case', ()=>{
+    beforeEach((done)=>{
+        this.controller = Botmock({
+            debug: false,
+        });
+        this.bot = this.controller.spawn({type: 'slack'});
+
+        this.bot.api.setData('users.list', {ok: false, error: 'not_authed'});
+        this.bot.api.setData('channels.info', {channel1: {ok: false, error: 'channel_not_found'}});
+        done();
+    });
+
+    it('should return error in users.list call', (done)=>{
+        this.bot.api.callAPI('users.list', {}, (err, data)=>{
+            expect(err).toBe('not_authed');
+            done();
+        })
+    });
+
+    it('should return error in channels.info call', (done)=>{
+        this.bot.api.callAPI('channels.info', {channel: 'channel1'}, (err, data)=>{
+            expect(err).toBe('channel_not_found');
+            done();
+        })
+    });
+
+    it('should not return error when ok is not specified', (done)=>{
+        this.bot.api.setData('users.list', {members: [{id: '2'}]});
+        this.bot.api.callAPI('users.list', {}, (err, data)=>{
+            expect(err).toBeNull();
+            done();
+        })
+    });
+});
