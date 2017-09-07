@@ -9,7 +9,7 @@
     "test_jasmine": "find ./ -name '*JasmineSpec.js' | xargs jasmine-node"
   },
   "dependencies": {
-    "botkit": "^0.5.2"
+    "botkit": "^0.5.8"
   },
   "devDependencies": {
     "assert": "^1.4.1",
