@@ -111,4 +111,5 @@ To add functionality to `botkit-mock`, you can create platform-specific function
 
 
 Built by the team at https://www.gratify.chat.
+Like botkit-mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
 
