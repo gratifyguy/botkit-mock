@@ -1,8 +1,5 @@
 language: node_js
 node_js:
-  - "7.1"
-  - "6.9"
-  - "4.6"
   - "stable"
 
 install:
