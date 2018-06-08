@@ -97,4 +97,50 @@ describe('extendSlackBot', () => {
 		});
 
 	});
+	
+	describe('support createPrivateConversation', () => {
+		beforeEach(() => {
+			this.controller = Botmock({
+				debug: false,
+			});
+
+			this.bot = this.controller.spawn({type: 'slack'});
+			
+			this.controller.startTicking();
+		});
+
+		it('should log the updated message to replies as well', (done) => {
+			this.userMessage = {
+				user: 'some user id',
+				channel: 'some channel'
+			};
+			
+			this.bot.api.setData('im.open', {
+				[this.userMessage.user]: {
+					ok: true,
+					channel: {
+						id: this.userMessage.channel,
+					},
+				}
+			});
+			
+			this.bot.api.setFilter('im.open', function (params) {
+				return this.data[params.user];
+			});
+			
+			this.bot.createPrivateConversation(this.userMessage, (err, convo)=>{
+				convo.ask('test message', ()=>{
+				
+				});
+				
+				convo.activate()
+				
+				setTimeout(()=>{
+					assert.equal(this.bot.detailed_answers[this.userMessage.channel][0].text, 'test message');
+					done();
+				}, 200)
+			});
+		});
+
+	});
 });
