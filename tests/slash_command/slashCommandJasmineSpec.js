@@ -97,5 +97,18 @@ describe('slash command tests', () => {
 		});
 		jasmine.asyncSpecWait();
 	});
+
+	describe('reply with timeout', () => {
+		it('should wait for the command result given a timout', () => {
+			this.sequence[0].messages[0].command = '/private_long_running';
+			this.sequence[0].messages[0].timeout = 600;
+			
+			return this.bot.usersInput(this.sequence).then((msg) => {
+				expect(msg.text).toBe('Timeout reply');
+				jasmine.asyncSpecDone();
+			}).catch((err) => { console.error(err); });
+		});
+		jasmine.asyncSpecWait();
+	});
 });
 
