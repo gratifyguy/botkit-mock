@@ -16,7 +16,7 @@ module.exports = function (controller) {
 			case '/private_long_running':
 				setTimeout(function () { 
 					bot.reply(message, 'Timeout reply'); 
-				}, 500);
+				}, 200);
 				break;
 		}
 	});

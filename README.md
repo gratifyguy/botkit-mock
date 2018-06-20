@@ -93,6 +93,8 @@ beforeEach(()=>{
     - `isAssertion` indicates which conversation response array to return in `.then()` in multi-user testing. (required) (boolean)
     - `deep` indicates the index of the conversation response to return in `.then()`. 0 (default) is the last response, 1 is the second-to-last, etc.. (integer)
     - `timeout` set timeout for message in milliseconds (integer)
+    - `waitBefore` alias for `timeout`, indicates how many milliseconds to wait before sending the message to the bot (integer)
+    - `waitAfter` indicates how many milliseconds to wait for the bot response, useful for long-running commands (integer)
     - `text` the message's text (string)
     - `channel` indicates the channel the message was sent in. This overrides the channel defined in `usersInput` for this current message. (string)
     - ...any other fields you may be testing for including `attachments`, `callback_id`, etc...
