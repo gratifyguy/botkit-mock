@@ -13,6 +13,11 @@ module.exports = function (controller) {
 			case '/private_delayed':
 				bot.replyPrivateDelayed(message, 'This is a private reply to the ' + message.command + ' slash command!');
 				break;
+			case '/private_long_running':
+				setTimeout(function () { 
+					bot.reply(message, 'Timeout reply'); 
+				}, 200);
+				break;
 		}
 	});
 };
