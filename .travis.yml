@@ -4,8 +4,8 @@ node_js:
 
 install:
   - npm install
-  - npm install --prefix ./examples/convo-bot
+  - npm install --prefix ./examples/botkit-slack
 
 script:
   - npm run test
-  - npm test --prefix ./examples/convo-bot
+  - npm test --prefix ./examples/botkit-slack

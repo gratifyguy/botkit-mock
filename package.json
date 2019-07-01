@@ -4,18 +4,18 @@
   "description": "Write tests for botkit.",
   "main": "lib/Botmock.js",
   "scripts": {
-    "test": "npm run test_mocha && npm run test_jasmine",
-    "test_mocha": "find ./tests -name '*MochaSpec.js' | xargs mocha -t 2000 -R spec",
-    "test_jasmine": "find ./tests -name '*JasmineSpec.js' | xargs jasmine-node"
+    "test": "find ./tests -name '*Spec.js' | xargs mocha -t 2000 -R spec"
   },
   "devDependencies": {
     "assert": "^1.4.1",
-    "jasmine-node": "^1.14.5",
-    "mocha": "^2.4.5"
+    "mocha": "^6.1.4"
   },
   "dependencies": {
-    "botkit": "^0.7.4",
-    "async": "^2.1.5"
+    "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.16.0",
+    "botbuilder": "^4.4.0",
+    "botbuilder-adapter-slack": "^1.0.3",
+    "botkit": "^4.0.0"
   },
   "repository": {
     "type": "git",
