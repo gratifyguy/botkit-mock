@@ -1,10 +1,10 @@
 {
   "name": "botkit-mock",
-  "version": "4.0",
+  "version": "4.0.0",
   "description": "Write tests for botkit.",
   "main": "lib/Botmock.js",
   "scripts": {
-    "test": "find ./tests -name '*Spec.js' | xargs mocha -t 2000 -R spec"
+    "test": "mocha --recursive \"./tests/**/*.js\""
   },
   "devDependencies": {
     "assert": "^1.4.1",

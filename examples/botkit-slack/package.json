@@ -5,7 +5,7 @@
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "test": "find ./tests -name '*Spec.js' | xargs mocha -t 2000 -R spec"
+    "test": "mocha --recursive \"./tests/**/*.js\""
   },
   "devDependencies": {
     "assert": "^1.4.1",
