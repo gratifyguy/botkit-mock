@@ -5,7 +5,11 @@
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "find ./tests -name '*Spec.js' | xargs mocha -t 2000 -R spec"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^6.1.4"
   },
   "dependencies": {
     "botbuilder-adapter-slack": "^1.0.3",
