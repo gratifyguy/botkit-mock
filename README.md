@@ -132,14 +132,6 @@ SlackApiMock.bindMockApi(controller);
 * `controller.apiLogByKey` - object with logged requests over `bot.api.` 
 * `controller.httpBodyLog` - array of botkit responses to slack in some cases 
 
-### Api to get test data
-Botmock controller has next api:
-```javascript
-    controller.axiosMockAdapter
-    controller.apiLogByKey
-    controller.httpBodyLog - array with statuses
-```
-
 ## .usersInput options
 1. `user` user slackId (required) (string)
 2. `channel` is a channel where user sends messages (required) (string)
@@ -162,9 +154,13 @@ To add functionality to `botkit-mock`, you can create platform-specific function
 
 ## Examples ##
 
-- [botkit-starter-slack](examples/botkit-starter-slack) - tests for [botkit starter kit](https://github.com/howdyai/botkit-starter-slack) (files with name `*mochaSpec.js`)
-- [convo_bot](examples/convo_bot) - tests for simple bot convo  (files with name `*MochaSpec.js` or `*JasmineSpec.js`)
-- [api](./tests/updateApiResponseMochaSpec.js) - simple api calls and api response overrides
+- [botkit-slack](examples/botkit-slack) - tests for a fresh Botkit starter kit, from the Yeoman generator or [a starter kit on Glitch](https://glitch.com/botkit)
+                                                    
+```
+npm install -g yo generator-botkit
+yo botkit
+```
+- [api](./tests/updateApiResponsesSpec.js) - simple api calls and api response overrides
 
 
 Built by the team at https://www.gratify.chat.
