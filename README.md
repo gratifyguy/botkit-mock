@@ -14,7 +14,7 @@
 
 ### Testing Controllers ###
 
-Let's say you have a controller that looks something like this:
+Assuming you have a controller written like below:
 
 ```javascript
 module.exports = function(controller) {
@@ -25,7 +25,7 @@ module.exports = function(controller) {
 }
 ```
 
-To use `botkit-mock`, you can test your controller like below:
+You can write a describe block to test your controller:
 
 ```javascript
 const { Botmock, SlackApiMock } = require('botkit-mock');
@@ -72,6 +72,7 @@ it('should return `help message` if user types `help`', async () => {
             }
         ]
     );
+
     /* example of botkit response
     { type: 'message',
       text: 'help message',
@@ -99,15 +100,17 @@ it('should return `help message` if user types `help`', async () => {
       recipient: { id: 'someUserId' } 
       }
      */
+
     return assert.equal(message.text, 'help message');
 });
 ```
 
-## Advance usage
-`Botkit` itself depends on adapters (slack, facebook, etc.).
-`Botmock` is an extension of `Botkit` provides interface for accepting user messages through `.usersInput`.
-You could connect any botkit providers to botmock.
-For now, we have only advance slack binding for the [slack provider](https://github.com/howdyai/botkit/tree/master/packages/botbuilder-adapter-slack). 
+## Advanced usage
+Botkit depends on adapters (Slack, Facebook, MS Teams, etc).
+Botkit-Mock is an extension of Botkit that provides an interface for accepting user messages through `.usersInput`. You can connect any valid Botkit adapters to Botkit-Mock, although currently, we have only provided an adapter for [Slack](https://github.com/howdyai/botkit/tree/master/packages/botbuilder-adapter-slack). (needs file reference)
+
+Below is an example of how you may extend Botkit-Mock. (is this correct?)
+
 ```javascript
 const { Botmock, SlackApiMock } = require('botkit-mock');
 const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
@@ -127,7 +130,8 @@ const controller = new Botmock({
 
 SlackApiMock.bindMockApi(controller);
 ```
-`SlackApiMock` - binds to botmock `controller` next properties:
+## Definitions (needs refinement here)
+`SlackApiMock` - binds to botkit-mock `controller` next properties:
 * `controller.axiosMockAdapter` - [axios mock](https://github.com/ctimmerm/axios-mock-adapter) entity helps to mock requests to slack api, botkit slack provider uses axios as request lib, [here](/test/updateApiResponsesSpec.js) are examples how to mock requests
 * `controller.apiLogByKey` - object with logged requests over `bot.api.` 
 * `controller.httpBodyLog` - array of botkit responses to slack in some cases 
@@ -148,9 +152,9 @@ SlackApiMock.bindMockApi(controller);
 
 
 ## Contributing ##
-`botkit-mock` currently (and will always) support all of Botkit's core functionality by default. We also support extended Slack and Facebook functionality. 
+Botkit-mock currently (and will always) support all of botkit's core functionality by default. We also support extended Slack and Facebook functionality, via adapters.
 
-To add functionality to `botkit-mock`, you can create platform-specific functions like seen in [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js). If you add functionality to support something we don't, please make a PR.
+To add functionality to botkit-mock, you can create platform-specific functions like seen in [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js). If you need functionality that we don't have, please create an issue and/or create a PR solution, we heavily depend on the open source community to improve botkit-mock.
 
 ## Examples ##
 
@@ -163,7 +167,7 @@ yo botkit
 - [api](./tests/updateApiResponsesSpec.js) - simple api calls and api response overrides
 
 
-Built by the team at https://www.gratify.chat.
+Built by the team at https://www.gratify.ai.
 
 Like botkit-mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
 
