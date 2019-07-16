@@ -131,9 +131,9 @@ Botkit-Mock is an extension of Botkit that provides an interface for accepting u
 
 
 ## Contributing ##
-Botkit-mock currently (and will always) support all of botkit's core functionality by default. We also support extended Slack and Facebook functionality, via adapters.
+Botkit-Mock supports all of Botkit's core functionality by default. We also support extended Slack and Facebook functionality, via adapters.
 
-To add functionality to botkit-mock, you can create platform-specific functions like seen in [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js). If you need functionality that we don't have, please create an issue and/or create a PR solution, we heavily depend on the open source community to improve botkit-mock.
+To add functionality to Botkit-Mock for your favorite chat platform, please open an issue.
 
 ## Examples ##
 
