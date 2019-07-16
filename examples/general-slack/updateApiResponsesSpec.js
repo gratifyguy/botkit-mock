@@ -1,8 +1,8 @@
 'use strict';
 const assert = require('assert');
-const {Botmock, SlackApiMock} = require('../lib');
+const {BotMock, SlackApiMock} = require('../../lib');
 
-const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
+const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack/lib/index');
 
 describe('Slack API responses', function () {
 	beforeEach(async () => {
@@ -15,7 +15,7 @@ describe('Slack API responses', function () {
 		adapter.use(new SlackEventMiddleware());
 		adapter.use(new SlackMessageTypeMiddleware());
 
-		this.controller = new Botmock({
+		this.controller = new BotMock({
 			adapter: adapter,
 			disable_webserver: true
 		});

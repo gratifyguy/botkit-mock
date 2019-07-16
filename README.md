@@ -6,7 +6,7 @@
 ## Setup ##
 
 1. `npm install --save botkit-mock`
-2. Require `botkit-mock` in your test: `const { Botmock } = require('botkit-mock');`
+2. Require `botkit-mock` in your test: `const { BotMock } = require('botkit-mock');`
 3. Require your controller in your test: `const fileBeingTested = require("./indexController")`
 4. Follow test case examples seen [here](/examples)
 
@@ -28,12 +28,12 @@ module.exports = function(controller) {
 You can write a describe block to test your controller:
 
 ```javascript
-const { Botmock, SlackApiMock } = require('botkit-mock');
+const { BotMock, SlackApiMock } = require('botkit-mock');
 const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
 
 const yourController = require("./yourController");
 
-describe("controller tests",()=>{
+describe(general-slack,()=>{
     beforeEach(()=>{
        const adapter = new SlackAdapter({
             clientSigningSecret: "secret",
@@ -44,7 +44,7 @@ describe("controller tests",()=>{
         adapter.use(new SlackEventMiddleware());
         adapter.use(new SlackMessageTypeMiddleware());
    
-        this.controller = new Botmock({
+        this.controller = new BotMock({
             adapter: adapter,
             disable_webserver: true
         });
@@ -144,7 +144,7 @@ npm install -g yo generator-botkit
 yo botkit
 ```
 
-- [Slack API](./tests/updateApiResponsesSpec.js) - API calls and API response overrides
+- [Slack API](examples/general-slack/updateApiResponsesSpec.js) - API calls and API response overrides
 
 
 Built by the team at https://www.gratify.ai.

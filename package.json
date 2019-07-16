@@ -4,7 +4,7 @@
   "description": "Write tests for botkit.",
   "main": "lib/BotMock.js",
   "scripts": {
-    "test": "mocha --recursive \"./tests/**/*.js\""
+    "test": "mocha --recursive \"./examples/general-slack/**/*.js\""
   },
   "devDependencies": {
     "assert": "^1.4.1",

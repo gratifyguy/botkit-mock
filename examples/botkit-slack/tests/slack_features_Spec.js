@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const {Botmock, SlackApiMock} = require('../../../lib');
+const {BotMock, SlackApiMock} = require('../../../lib');
 const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
 const fileBeingTested = require('../features/slack_features');
 
@@ -8,7 +8,7 @@ async function setTimeoutAsync(timeout = 100) {
     return new Promise((r) => setTimeout(r, timeout));
 }
 
-describe('slack_features file tests', () => {
+describe('slack_features file general-slack', () => {
     const initController = () => {
         const adapter = new SlackAdapter({
             clientSigningSecret: "some secret",
@@ -18,7 +18,7 @@ describe('slack_features file tests', () => {
         adapter.use(new SlackEventMiddleware());
         adapter.use(new SlackMessageTypeMiddleware());
 
-        this.controller = new Botmock({
+        this.controller = new BotMock({
             adapter: adapter,
         });
 

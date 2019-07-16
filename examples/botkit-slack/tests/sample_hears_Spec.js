@@ -1,11 +1,11 @@
 'use strict';
 const assert = require('assert');
-const {Botmock, SlackApiMock} = require('../../../lib');
+const {BotMock, SlackApiMock} = require('../../../lib');
 
 const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
 const fileBeingTested = require('../features/sample_hears');
 
-describe('sample_hears file tests', () => {
+describe('sample_hears file general-slack', () => {
     beforeEach(() => {
         this.userInfo = {
             slackId: 'user123',
@@ -21,7 +21,7 @@ describe('sample_hears file tests', () => {
         adapter.use(new SlackEventMiddleware());
         adapter.use(new SlackMessageTypeMiddleware());
 
-        this.controller = new Botmock({
+        this.controller = new BotMock({
             adapter: adapter,
         });
 
