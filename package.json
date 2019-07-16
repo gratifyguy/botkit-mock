@@ -2,7 +2,7 @@
   "name": "botkit-mock",
   "version": "4.0.0",
   "description": "Write tests for botkit.",
-  "main": "lib/Botmock.js",
+  "main": "lib/BotMock.js",
   "scripts": {
     "test": "mocha --recursive \"./tests/**/*.js\""
   },

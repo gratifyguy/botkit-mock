@@ -105,36 +105,15 @@ it('should return `help message` if user types `help`', async () => {
 });
 ```
 
-## Advanced usage
+## Additional Information 
 Botkit depends on adapters (Slack, Facebook, MS Teams, etc).
-Botkit-Mock is an extension of Botkit that provides an interface for accepting user messages through `.usersInput`. You can connect any valid Botkit adapters to Botkit-Mock, although currently, we have only provided an adapter for [Slack](https://github.com/howdyai/botkit/tree/master/packages/botbuilder-adapter-slack). (needs file reference)
+Botkit-Mock is an extension of Botkit that provides an interface for accepting user messages through `.usersInput`. You can connect any valid Botkit adapters to Botkit-Mock to extend Botkit-Mock, although currently, we have only provided an extension for [Slack](lib/Slack).
 
-Below is an example of how you may extend Botkit-Mock. (is this correct?)
-
-```javascript
-const { Botmock, SlackApiMock } = require('botkit-mock');
-const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
-const adapter = new SlackAdapter({
-    clientSigningSecret: "secret",
-    botToken: "token",
-    debug: true
-});
-
-adapter.use(new SlackEventMiddleware());
-adapter.use(new SlackMessageTypeMiddleware());
-
-const controller = new Botmock({
-    adapter: adapter,
-    disable_webserver: true
-});
-
-SlackApiMock.bindMockApi(controller);
-```
-## Definitions (needs refinement here)
-`SlackApiMock` - binds to botkit-mock `controller` next properties:
-* `controller.axiosMockAdapter` - [axios mock](https://github.com/ctimmerm/axios-mock-adapter) entity helps to mock requests to slack api, botkit slack provider uses axios as request lib, [here](/test/updateApiResponsesSpec.js) are examples how to mock requests
-* `controller.apiLogByKey` - object with logged requests over `bot.api.` 
-* `controller.httpBodyLog` - array of botkit responses to slack in some cases 
+## Slack Adapter Information
+`SlackApiMock` - Binds the following properties to the Botkit-Mock `controller`.
+* `controller.axiosMockAdapter` - [Axios mock](https://github.com/ctimmerm/axios-mock-adapter) helps to mock requests to the Slack API.  [Here](/test/updateApiResponsesSpec.js) are examples of this being used.
+* `controller.apiLogByKey` - This contains information about results of requests through `bot.api`.
+* `controller.httpBodyLog` - This contains an array of Botkit responses to Slack usually set through `httpBody()`.
 
 ## .usersInput options
 1. `user` user slackId (required) (string)
@@ -158,17 +137,19 @@ To add functionality to botkit-mock, you can create platform-specific functions 
 
 ## Examples ##
 
-- [botkit-slack](examples/botkit-slack) - tests for a fresh Botkit starter kit, from the Yeoman generator or [a starter kit on Glitch](https://glitch.com/botkit)
+- [botkit-slack](examples/botkit-slack) - tests from a fresh Botkit starter kit, from the Yeoman generator or [a starter kit on Glitch](https://glitch.com/botkit)
                                                     
 ```
 npm install -g yo generator-botkit
 yo botkit
 ```
-- [api](./tests/updateApiResponsesSpec.js) - simple api calls and api response overrides
+
+- [Slack API](./tests/updateApiResponsesSpec.js) - API calls and API response overrides
 
 
 Built by the team at https://www.gratify.ai.
 
-Like botkit-mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
+Like Botkit-Mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
 
-## [Change Log](CHANGELOG.md)
+## Change Log
+See change log [here](CHANGELOG.md)
