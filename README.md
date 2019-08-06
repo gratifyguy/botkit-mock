@@ -10,6 +10,11 @@
 3. Require your controller in your test: `const fileBeingTested = require("./indexController")`
 4. Follow test case examples seen [here](/examples)
 
+## General Information
+Botkit depends on adapters (Slack, Facebook, MS Teams, etc).
+Botkit-Mock is an extension of Botkit that provides an interface for accepting user messages through `.usersInput`. You can connect any valid Botkit adapters to Botkit-Mock to extend Botkit-Mock, although currently, we have only provided an extension for [Slack](lib/slack).
+
+
 ## Basic Usage ##
 
 ### Testing Controllers ###
@@ -74,49 +79,46 @@ it('should return `help message` if user types `help`', async () => {
         ]
     );
 
-    /* example of botkit response
-    { type: 'message',
-      text: 'help message',
-      attachmentLayout: undefined,
-      attachments: undefined,
-      suggestedActions: undefined,
-      speak: undefined,
-      inputHint: undefined,
-      summary: undefined,
-      textFormat: undefined,
-      importance: undefined,
-      deliveryMode: undefined,
-      expiration: undefined,
-      value: undefined,
-      channelData:
-       { channelId: 'slack',
-         serviceUrl: '',
-         conversation: { id: 'someChannel', thread_ts: null },
-         from: { id: '' },
-         recipient: { id: 'someUserId' } },
-      channelId: 'slack',
-      serviceUrl: undefined,
-      conversation: { id: 'someChannel', thread_ts: null },
-      from: { id: undefined },
-      recipient: { id: 'someUserId' } 
-      }
-     */
-
     return assert.equal(message.text, 'help message');
 });
+
+/* example of botkit response
+	{ 
+		type: 'message',
+		text: 'help message',
+		attachmentLayout: undefined,
+		attachments: undefined,
+		suggestedActions: undefined,
+		speak: undefined,
+		inputHint: undefined,
+		summary: undefined,
+		textFormat: undefined,
+		importance: undefined,
+		deliveryMode: undefined,
+		expiration: undefined,
+		value: undefined,
+		channelData:
+		{
+			channelId: 'slack',
+			serviceUrl: '',
+			conversation: { 
+				id: 'someChannel', 
+				thread_ts: null 
+		},
+		from: 
+			{ 
+				id: '' 
+			},
+		recipient: { id: 'someUserId' } },
+		channelId: 'slack',
+		serviceUrl: undefined,
+		conversation: { id: 'someChannel', thread_ts: null },
+		from: { id: undefined },
+		recipient: { id: 'someUserId' } 
+	 }
+*/
 ```
-
-## Additional Information 
-Botkit depends on adapters (Slack, Facebook, MS Teams, etc).
-Botkit-Mock is an extension of Botkit that provides an interface for accepting user messages through `.usersInput`. You can connect any valid Botkit adapters to Botkit-Mock to extend Botkit-Mock, although currently, we have only provided an extension for [Slack](lib/Slack).
-
-## Slack Adapter Information
-`SlackApiMock` - Binds the following properties to the Botkit-Mock `controller`.
-* `controller.axiosMockAdapter` - [Axios mock](https://github.com/ctimmerm/axios-mock-adapter) helps to mock requests to the Slack API.  [Here](/test/updateApiResponsesSpec.js) are examples of this being used.
-* `controller.apiLogByKey` - This contains information about results of requests through `bot.api`.
-* `controller.httpBodyLog` - This contains an array of Botkit responses to Slack usually set through `httpBody()`.
-
-## .usersInput options
+### .usersInput options
 1. `user` user slackId (required) (string)
 2. `channel` is a channel where user sends messages (required) (string)
 3. `type` specify botkit message type. ie `direct_message`, `message_received`, `interactive_message_callback`. (defaults to `direct_message`) (string)
@@ -131,26 +133,26 @@ Botkit-Mock is an extension of Botkit that provides an interface for accepting u
     - ...any other fields you may be testing for including `attachments`, `callback_id`, etc...
 
 
-## Contributing ##
-Botkit-Mock supports all of Botkit's core functionality by default. We also support extended Slack and Facebook functionality, via adapters.
+## Slack Adapter Information
+The Slack adapter is located in [./lib/slack](https://github.com/gratifyguy/botkit-mock/tree/init-4.0/lib/slack). The ApiMock allows you to test Slack's API. It binds the following properties to the Botkit-Mock `controller`.
+* `controller.axiosMockAdapter` - [Axios mock](https://github.com/ctimmerm/axios-mock-adapter) helps to mock requests to the Slack API.  Examples of this are used in [./examples/general-slack/updateApiResponsesSpec](https://www.github.com/botkit-mock/examples/general-slack/updateApiResponsesSpec.js).
+* `controller.apiLogByKey` - This contains information about results of requests through `bot.api`.
+* `controller.httpBodyLog` - This contains an array of Botkit responses to Slack usually set through `httpBody()`.
 
-To add functionality to Botkit-Mock for your favorite chat platform, please open an issue.
+
+
+## Contributing ##
+Botkit-Mock supports all of Botkit's core functionality by default, but we need help creating adapters for platforms other than Slack. 
+To add functionality to Botkit-Mock for your favorite chat platform, please open an issue and we can advise.
 
 ## Examples ##
 
-- [botkit-slack](examples/botkit-slack) - tests from a fresh Botkit starter kit, from the Yeoman generator or [a starter kit on Glitch](https://glitch.com/botkit)
-                                                    
-```
-npm install -g yo generator-botkit
-yo botkit
-```
+- [Botkit Starter Kit](examples/botkit-slack) - Tests for the Botkit starter kit ([Glitch](https://glitch.com/botkit))
 
-- [Slack API](examples/general-slack/updateApiResponsesSpec.js) - API calls and API response overrides
+- [Slack API](examples/general-slack/updateApiResponsesSpec.js) - Tests for various Slack API calls. Includes API response overrides.
 
 
 Built by the team at https://www.gratify.ai.
 
 Like Botkit-Mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
 
-## Change Log
-See change log [here](CHANGELOG.md)
