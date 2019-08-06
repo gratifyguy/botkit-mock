@@ -6,15 +6,20 @@
 ## Setup ##
 
 1. `npm install --save botkit-mock`
-2. Require `botkit-mock` in your test: `const Botmock = require('botkit-mock');`
+2. Require `botkit-mock` in your test: `const { BotMock } = require('botkit-mock');`
 3. Require your controller in your test: `const fileBeingTested = require("./indexController")`
 4. Follow test case examples seen [here](/examples)
+
+## General Information
+Botkit depends on adapters (Slack, Facebook, MS Teams, etc).
+Botkit-Mock is an extension of Botkit that provides an interface for accepting user messages through `.usersInput`. You can connect any valid Botkit adapters to Botkit-Mock to extend Botkit-Mock, although currently, we have only provided an extension for [Slack](lib/slack).
+
 
 ## Basic Usage ##
 
 ### Testing Controllers ###
 
-Let's say you have a controller that looks something like this:
+Assuming you have a controller written like below:
 
 ```javascript
 module.exports = function(controller) {
@@ -25,29 +30,44 @@ module.exports = function(controller) {
 }
 ```
 
-To use `botkit-mock`, you can test your controller like below:
+You can write a describe block to test your controller:
 
 ```javascript
-const Botmock = require('botkit-mock');
+const { BotMock, SlackApiMock } = require('botkit-mock');
+const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
+
 const yourController = require("./yourController");
 
-describe("controller tests",()=>{
+describe(general-slack,()=>{
     beforeEach(()=>{
-        this.controller = Botmock({});
-        // type can be ‘slack’, facebook’, or null
-        this.bot = this.controller.spawn({type: 'slack'});
+       const adapter = new SlackAdapter({
+            clientSigningSecret: "secret",
+            botToken: "token",
+            debug: true
+        });
+   
+        adapter.use(new SlackEventMiddleware());
+        adapter.use(new SlackMessageTypeMiddleware());
+   
+        this.controller = new BotMock({
+            adapter: adapter,
+            disable_webserver: true
+        });
+   
+        SlackApiMock.bindMockApi(this.controller);
         yourController(this.controller);
     });
 });
 ```
 
-In your `it` statement, use the `bot.usersInput` method to define the conversation.
+In your `it` statement, use the `controller.usersInput` method to define the conversation.
 
 ```javascript
-it('should return `help message` if user types `help`', () => {
-    return this.bot.usersInput(
+it('should return `help message` if user types `help`', async () => {
+    const message = await this.controller.usersInput(
         [
-            {
+            {   
+                type: "message",
                 user: 'someUserId',
                 channel: 'someChannel',
                 messages: [
@@ -57,35 +77,48 @@ it('should return `help message` if user types `help`', () => {
                 ]
             }
         ]
-    ).then((message) => {
-        // In message, we receive a full object that includes params:
-        // {
-        //    user: 'someUserId',
-        //    channel: 'someChannel',
-        //    text: 'help message',
-        // }
-        return assert.equal(message.text, 'help message');
-    })
+    );
+
+    return assert.equal(message.text, 'help message');
 });
+
+/* example of botkit response
+	{ 
+		type: 'message',
+		text: 'help message',
+		attachmentLayout: undefined,
+		attachments: undefined,
+		suggestedActions: undefined,
+		speak: undefined,
+		inputHint: undefined,
+		summary: undefined,
+		textFormat: undefined,
+		importance: undefined,
+		deliveryMode: undefined,
+		expiration: undefined,
+		value: undefined,
+		channelData:
+		{
+			channelId: 'slack',
+			serviceUrl: '',
+			conversation: { 
+				id: 'someChannel', 
+				thread_ts: null 
+		},
+		from: 
+			{ 
+				id: '' 
+			},
+		recipient: { id: 'someUserId' } },
+		channelId: 'slack',
+		serviceUrl: undefined,
+		conversation: { id: 'someChannel', thread_ts: null },
+		from: { id: undefined },
+		recipient: { id: 'someUserId' } 
+	 }
+*/
 ```
-## Advanced Usage ##
-
-`botExtender` - allows developers to extend the bot and add custom functions to the `bot`. This overrides functionality in [BotmockWorker.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/BotmockWorker.js).
-
-To use this, define `botExtender` in your `beforeEach`. It accepts three parameters `(bot, botkit, config)`, which are passed in from [Botmock.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/Botmock.js) and [BotmockWorker.js](https://github.com/gratifychat/botkit-mock/blob/migrate_to_botkit_core/lib/BotmockWorker.js). Pass `botExtender` to your `.spawn()` and you will have access to your custom functions in the `it`.
-
-```javascript
-beforeEach(()=>{
-        function botExtender(bot, botkit, config){
-            bot.customReply = function(message, text){
-                bot.reply(message, 'Something new...' + text)
-            }
-        }
-        this.bot = this.controller.spawn({type: 'slack', botExtender: botExtender});
-    });
-```
-
-## usersInput options
+### .usersInput options
 1. `user` user slackId (required) (string)
 2. `channel` is a channel where user sends messages (required) (string)
 3. `type` specify botkit message type. ie `direct_message`, `message_received`, `interactive_message_callback`. (defaults to `direct_message`) (string)
@@ -100,20 +133,26 @@ beforeEach(()=>{
     - ...any other fields you may be testing for including `attachments`, `callback_id`, etc...
 
 
-## Contributing ##
-`botkit-mock` currently (and will always) support all of Botkit's core functionality by default. We also support extended Slack and Facebook functionality. 
+## Slack Adapter Information
+The Slack adapter is located in [./lib/slack](https://github.com/gratifyguy/botkit-mock/tree/init-4.0/lib/slack). The ApiMock allows you to test Slack's API. It binds the following properties to the Botkit-Mock `controller`.
+* `controller.axiosMockAdapter` - [Axios mock](https://github.com/ctimmerm/axios-mock-adapter) helps to mock requests to the Slack API.  Examples of this are used in [./examples/general-slack/updateApiResponsesSpec](https://www.github.com/botkit-mock/examples/general-slack/updateApiResponsesSpec.js).
+* `controller.apiLogByKey` - This contains information about results of requests through `bot.api`.
+* `controller.httpBodyLog` - This contains an array of Botkit responses to Slack usually set through `httpBody()`.
 
-To add functionality to `botkit-mock`, you can create platform-specific functions like seen in [FacebookBotWorker](https://github.com/gratifychat/botkit-mock/blob/3f74a87d16cfa432dcc42c191c6e5542cc3c393f/lib/FacebookBotWorker/index.js). If you add functionality to support something we don't, please make a PR.
+
+
+## Contributing ##
+Botkit-Mock supports all of Botkit's core functionality by default, but we need help creating adapters for platforms other than Slack. 
+To add functionality to Botkit-Mock for your favorite chat platform, please open an issue and we can advise.
 
 ## Examples ##
 
-- [botkit-starter-slack](examples/botkit-starter-slack) - tests for [botkit starter kit](https://github.com/howdyai/botkit-starter-slack) (files with name `*mochaSpec.js`)
-- [convo_bot](examples/convo_bot) - tests for simple bot convo  (files with name `*MochaSpec.js` or `*JasmineSpec.js`)
-- [api](./tests/updateApiResponseMochaSpec.js) - simple api calls and api response overrides
+- [Botkit Starter Kit](examples/botkit-slack) - Tests for the Botkit starter kit ([Glitch](https://glitch.com/botkit))
+
+- [Slack API](examples/general-slack/updateApiResponsesSpec.js) - Tests for various Slack API calls. Includes API response overrides.
 
 
-Built by the team at https://www.gratify.chat.
+Built by the team at https://www.gratify.ai.
 
-Like botkit-mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
+Like Botkit-Mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
 
-## [Change Log](CHANGELOG.md)

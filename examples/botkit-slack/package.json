@@ -1,0 +1,21 @@
+{
+  "name": "botkit-botkit-slack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "mocha --recursive \"./tests/**/*.js\""
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^6.1.4"
+  },
+  "dependencies": {
+    "botbuilder-adapter-slack": "^1.0.3",
+    "botbuilder-storage-mongodb": "^0.9.5",
+    "botkit": "^4.0.1",
+    "botkit-plugin-cms": "^1.0.0",
+    "dotenv": "^7.0.0"
+  }
+}
