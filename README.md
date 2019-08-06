@@ -55,13 +55,14 @@ describe(general-slack,()=>{
 });
 ```
 
-In your `it` statement, use the `bot.usersInput` method to define the conversation.
+In your `it` statement, use the `controller.usersInput` method to define the conversation.
 
 ```javascript
 it('should return `help message` if user types `help`', async () => {
-    const message = await this.bot.usersInput(
+    const message = await this.controller.usersInput(
         [
-            {
+            {   
+                type: "message",
                 user: 'someUserId',
                 channel: 'someChannel',
                 messages: [
