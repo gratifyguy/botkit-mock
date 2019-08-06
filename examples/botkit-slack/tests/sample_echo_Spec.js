@@ -44,7 +44,7 @@ describe('sample_echo file general-slack', () => {
                         }
                     ]
                 }
-            ])
+            ]);
 
             assert.strictEqual(reply.text, 'I heard a sample message.');
         });
