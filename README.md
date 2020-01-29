@@ -38,7 +38,7 @@ const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require
 
 const yourController = require("./yourController");
 
-describe(general-slack,()=>{
+describe('slack message',()=>{
     beforeEach(()=>{
        const adapter = new SlackAdapter({
             clientSigningSecret: "secret",
