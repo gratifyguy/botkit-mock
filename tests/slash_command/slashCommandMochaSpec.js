@@ -92,13 +92,12 @@ describe('slash command tests', () => {
 	});
 
 	describe('reply with timeout', () => {
-		it('should wait for the command result given a timout', (done) => {
+		it('should wait for the command result given a timout', () => {
 			this.sequence[0].messages[0].command = '/private_long_running';
 			this.sequence[0].messages[0].waitAfter = 300;
 			
 			return this.bot.usersInput(this.sequence).then((msg) => {
 				assert.equal(msg.text, 'Timeout reply');
-				done();
 			}).catch((err) => { console.error(err); });
 		});
 	});
