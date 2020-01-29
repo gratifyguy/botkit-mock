@@ -1,11 +1,11 @@
 {
   "name": "botkit-mock",
-  "version": "0.7.5-1",
+  "version": "0.7.5-2",
   "description": "Write tests for botkit.",
   "main": "lib/Botmock.js",
   "scripts": {
     "test": "npm run test_mocha && npm run test_jasmine",
-    "test_mocha": "find ./tests -name '*MochaSpec.js' | xargs mocha -t 2000 -R spec",
+    "test_mocha": "find ./tests -name '*MochaSpec.js' | xargs mocha --exit -t 2000 -R spec",
     "test_jasmine": "find ./tests -name '*JasmineSpec.js' | xargs jasmine-node"
   },
   "devDependencies": {
