@@ -40,11 +40,7 @@ const yourController = require("./yourController");
 
 describe('slack message',()=>{
     beforeEach(()=>{
-       const adapter = new SlackAdapter({
-            clientSigningSecret: "secret",
-            botToken: "token",
-            debug: true
-        });
+       const adapter = new SlackAdapter(SlackApiMock.slackAdapterMockParams);
    
         adapter.use(new SlackEventMiddleware());
         adapter.use(new SlackMessageTypeMiddleware());
