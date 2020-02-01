@@ -37,11 +37,13 @@ describe('Slack API responses', function () {
 		describe('success response', () => {
 			const usersListResponse = {
 				ok: true,
-				members: [{id: '2'}]
+				members: [{id: '2'}],
+				response_metadata: {}
 			};
 			const channelsInfoResponse = {
 				ok: true,
-				channel1: {id: '2'}
+				channel1: {id: '2'},
+				response_metadata: {}
 			};
 
 			beforeEach(() => {
@@ -63,11 +65,13 @@ describe('Slack API responses', function () {
 		describe('error response', () => {
 			const usersListResponse = {
 				ok: false,
-				error: 'not_authed'
+				error: 'not_authed',
+				response_metadata: {}
 			};
 			const channelsInfoResponse = {
 				ok: false,
-				error: 'channel_not_found'
+				error: 'channel_not_found',
+				response_metadata: {}
 			};
 
 			beforeEach(() => {

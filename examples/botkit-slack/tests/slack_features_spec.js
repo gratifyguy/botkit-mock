@@ -521,7 +521,7 @@ describe('slack_features file general-slack', () => {
                     "submit_label": "Submit",
                     "title": "this is a dialog",
                 },
-                "token": "some token"
+                "token": "mock"
             });
         });
 
