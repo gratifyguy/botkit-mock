@@ -6,11 +6,7 @@ const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require
 
 describe('Slack API responses', function () {
 	beforeEach(async () => {
-		const adapter = new SlackAdapter({
-			clientSigningSecret: "some secret",
-			botToken: "some token",
-			debug: true
-		});
+		const adapter = new SlackAdapter(SlackApiMock.slackAdapterMockParams);
 
 		adapter.use(new SlackEventMiddleware());
 		adapter.use(new SlackMessageTypeMiddleware());
