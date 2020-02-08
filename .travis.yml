@@ -8,4 +8,3 @@ install:
 
 script:
   - npm run test
-  - npm test --prefix ./examples/botkit-slack

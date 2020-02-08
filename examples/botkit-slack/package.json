@@ -5,7 +5,7 @@
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "test": "mocha --recursive \"./tests/**/*.js\""
+    "test": "mocha --recursive \"./tests/**/*.spec.js\""
   },
   "devDependencies": {
     "assert": "^1.5.0",

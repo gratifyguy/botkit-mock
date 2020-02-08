@@ -145,7 +145,7 @@ To add functionality to Botkit-Mock for your favorite chat platform, please open
 
 - [Botkit Starter Kit](examples/botkit-slack) - Tests for the Botkit starter kit ([Glitch](https://glitch.com/botkit))
 
-- [Slack API](examples/general-slack/updateApiResponsesSpec.js) - Tests for various Slack API calls. Includes API response overrides.
+- [Slack API](examples/general-slack/updateApiResponses.spec.js) - Tests for various Slack API calls. Includes API response overrides.
 
 
 Built by the team at https://www.gratify.ai.
