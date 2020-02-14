@@ -18,7 +18,9 @@ describe('Slack API responses', function () {
 
 		SlackApiMock.bindMockApi(this.controller);
 
-		this.bot = await this.controller.spawn();
+		this.bot = await this.controller.spawn('some team');
+		// or
+		// this.bot = await this.controller.spawn(BotMock.defaultFields.TEAM);
 	});
 
 	describe('default responses', () => {

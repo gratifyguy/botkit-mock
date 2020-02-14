@@ -191,7 +191,7 @@ describe('slack_features file general-slack', () => {
             initController();
         });
         it(`should reply in a correct sequence through message`, async () => {
-            const reply = await this.controller.usersInput([
+            await this.controller.usersInput([
                 {
                     type: 'message',
                     user: this.userInfo.slackId, //user required for each direct message
@@ -210,7 +210,7 @@ describe('slack_features file general-slack', () => {
         });
 
         it(`should reply in a correct sequence through direct_message`, async () => {
-            const reply = await this.controller.usersInput([
+            await this.controller.usersInput([
                 {
                     type: 'direct_message',
                     user: this.userInfo.slackId, //user required for each direct message
@@ -521,7 +521,7 @@ describe('slack_features file general-slack', () => {
                     "submit_label": "Submit",
                     "title": "this is a dialog",
                 },
-                "token": "botTokenMock"
+                "token": "mock-token"
             });
         });
 
