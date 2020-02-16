@@ -40,11 +40,7 @@ const yourController = require("./yourController");
 
 describe('slack message',()=>{
     beforeEach(()=>{
-       const adapter = new SlackAdapter({
-            clientSigningSecret: "secret",
-            botToken: "token",
-            debug: true
-        });
+       const adapter = new SlackAdapter(SlackApiMock.slackAdapterMockParams);
    
         adapter.use(new SlackEventMiddleware());
         adapter.use(new SlackMessageTypeMiddleware());
@@ -149,7 +145,7 @@ To add functionality to Botkit-Mock for your favorite chat platform, please open
 
 - [Botkit Starter Kit](examples/botkit-slack) - Tests for the Botkit starter kit ([Glitch](https://glitch.com/botkit))
 
-- [Slack API](examples/general-slack/updateApiResponsesSpec.js) - Tests for various Slack API calls. Includes API response overrides.
+- [Slack API](examples/general-slack/updateApiResponses.spec.js) - Tests for various Slack API calls. Includes API response overrides.
 
 
 Built by the team at https://www.gratify.ai.

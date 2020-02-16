@@ -2,15 +2,11 @@
 const assert = require('assert');
 const {BotMock, SlackApiMock} = require('../../../lib');
 const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require('botbuilder-adapter-slack');
-const fileBeingTested = require('./threadedMessage');
+const fileBeingTested = require('./dialog');
 
-describe('message in a thread', () => {
+describe('create dialog in a thread', () => {
 	const initController = () => {
-		const adapter = new SlackAdapter({
-			clientSigningSecret: "some secret",
-			botToken: "some token",
-			debug: true,
-		});
+		const adapter = new SlackAdapter(SlackApiMock.slackAdapterMockParams);
 		adapter.use(new SlackEventMiddleware());
 		adapter.use(new SlackMessageTypeMiddleware());
 
@@ -42,7 +38,7 @@ describe('message in a thread', () => {
 					channel: this.userInfo.channel, // user channel required for direct message
 					messages: [
 						{
-							text: 'create_service',
+							text: 'create_dialog_service',
 							isAssertion: true,
 						}
 					]

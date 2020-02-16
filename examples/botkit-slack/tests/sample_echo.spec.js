@@ -12,11 +12,7 @@ describe('sample_echo file general-slack', () => {
             channel: 'channel123',
         };
 
-        const adapter = new SlackAdapter({
-            clientSigningSecret: "some secret",
-            botToken: "some token",
-            debug: true
-        });
+        const adapter = new SlackAdapter(SlackApiMock.slackAdapterMockParams);
 
         adapter.use(new SlackEventMiddleware());
         adapter.use(new SlackMessageTypeMiddleware());

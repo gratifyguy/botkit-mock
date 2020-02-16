@@ -6,11 +6,7 @@ const {SlackAdapter, SlackMessageTypeMiddleware, SlackEventMiddleware} = require
 
 describe('Slack API responses', function () {
 	beforeEach(async () => {
-		const adapter = new SlackAdapter({
-			clientSigningSecret: "some secret",
-			botToken: "some token",
-			debug: true
-		});
+		const adapter = new SlackAdapter(SlackApiMock.slackAdapterMockParams);
 
 		adapter.use(new SlackEventMiddleware());
 		adapter.use(new SlackMessageTypeMiddleware());
@@ -22,7 +18,9 @@ describe('Slack API responses', function () {
 
 		SlackApiMock.bindMockApi(this.controller);
 
-		this.bot = await this.controller.spawn();
+		this.bot = await this.controller.spawn('some team');
+		// or
+		// this.bot = await this.controller.spawn(BotMock.defaultFields.TEAM);
 	});
 
 	describe('default responses', () => {
@@ -41,11 +39,13 @@ describe('Slack API responses', function () {
 		describe('success response', () => {
 			const usersListResponse = {
 				ok: true,
-				members: [{id: '2'}]
+				members: [{id: '2'}],
+				response_metadata: {}
 			};
 			const channelsInfoResponse = {
 				ok: true,
-				channel1: {id: '2'}
+				channel1: {id: '2'},
+				response_metadata: {}
 			};
 
 			beforeEach(() => {
@@ -67,11 +67,13 @@ describe('Slack API responses', function () {
 		describe('error response', () => {
 			const usersListResponse = {
 				ok: false,
-				error: 'not_authed'
+				error: 'not_authed',
+				response_metadata: {}
 			};
 			const channelsInfoResponse = {
 				ok: false,
-				error: 'channel_not_found'
+				error: 'channel_not_found',
+				response_metadata: {}
 			};
 
 			beforeEach(() => {
