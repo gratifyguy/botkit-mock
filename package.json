@@ -1,6 +1,6 @@
 {
   "name": "botkit-mock",
-  "version": "4.6.2",
+  "version": "4.8.1",
   "description": "Write tests for botkit.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "devDependencies": {
     "assert": "^1.5.0",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.3"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "axios-mock-adapter": "^1.16.0",
-    "botbuilder": "^4.7.1",
-    "botbuilder-adapter-slack": "^1.0.8",
-    "botkit": "^4.6.2"
+    "axios-mock-adapter": "^1.18.1",
+    "botbuilder": "^4.8.0",
+    "botbuilder-adapter-slack": "^1.0.10",
+    "botkit": "^4.8.1"
   },
   "repository": {
     "type": "git",

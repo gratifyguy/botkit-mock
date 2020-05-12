@@ -1,5 +1,9 @@
 # Change Log
 
+### 4.8.1
+* update to botkit 4.8.1
+* patch dependency security vulnerabilities noted in npm audit
+
 ### 4.6.2
 * update to botkit 4.6.2
 * add `slackAdapterMockParams` for simple `SlackAdapter` initialization 
