@@ -3,7 +3,7 @@ node_js:
   - "stable"
 
 install:
-  - npm install
+  - npm ci
   - npm install --prefix ./examples/botkit-slack
 
 script:
