@@ -14,7 +14,7 @@
     "axios-mock-adapter": "^1.18.1",
     "botbuilder": "4.9.0",
     "botbuilder-adapter-slack": "1.0.11",
-    "botkit": "4.8.1"
+    "botkit": "4.9.0"
   },
   "repository": {
     "type": "git",
