@@ -1,5 +1,8 @@
 # Change Log
 
+### 4.9.0
+* update to botkit 4.9.0
+
 ### 4.8.1
 * update to botkit 4.8.1
 * patch dependency security vulnerabilities noted in npm audit
