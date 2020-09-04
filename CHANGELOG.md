@@ -1,5 +1,8 @@
 # Change Log
 
+### 4.10.0
+* update to botkit 4.10.0
+
 ### 4.9.0
 * update to botkit 4.9.0
 
