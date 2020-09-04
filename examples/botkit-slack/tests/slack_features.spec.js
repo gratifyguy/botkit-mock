@@ -77,6 +77,10 @@ describe('slack_features file general-slack', () => {
                 ok: true,
                 channel: {id: this.userPrivateChannel}
             });
+            this.controller.axiosMockAdapter.onPost('conversations.open').reply(200, {
+                ok: true,
+                channel: {id: this.userPrivateChannel}
+            });
         });
         it(`should reply "Let's talk in private." in private channel`, async () => {
             await this.controller.usersInput([
@@ -92,6 +96,7 @@ describe('slack_features file general-slack', () => {
                     ]
                 }
             ]);
+            console.log(this.controller.detailed_answers)
             assert.deepStrictEqual(this.controller.detailed_answers[this.userPrivateChannel][0].text, 'Let\'s talk in private.');
         });
     });
