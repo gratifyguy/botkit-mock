@@ -7,7 +7,7 @@
     "test": "mocha --recursive \"./examples/**/*.spec.js\""
   },
   "devDependencies": {
-    "mocha": "8.3.0"
+    "mocha": "8.3.2"
   },
   "dependencies": {
     "axios": "^0.21.0",
