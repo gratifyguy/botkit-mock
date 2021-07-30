@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "axios-mock-adapter": "^1.18.1",
-    "botbuilder": "4.14.0",
+    "botbuilder": "4.14.1",
     "botbuilder-adapter-slack": "1.0.13",
     "botkit": "4.10.0"
   },
