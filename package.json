@@ -11,7 +11,7 @@
     "request": "^2.88.2"
   },
   "dependencies": {
-    "axios": "^0.22.0",
+    "axios": "^0.23.0",
     "axios-mock-adapter": "^1.18.1",
     "botbuilder": "^4.14.0",
     "botbuilder-adapter-slack": "^1.0.13",
