@@ -1,5 +1,8 @@
 # Change Log
 
+### 4.11.0
+* extend mocked slack api methods
+
 ### 4.10.0
 * update to botkit 4.10.0
 

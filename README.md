@@ -5,7 +5,7 @@
 
 ## Setup ##
 
-1. `npm install --save botkit-mock`
+1. `npm install --save-dev botkit-mock`
 2. Require `botkit-mock` in your test: `const { BotMock } = require('botkit-mock');`
 3. Require your controller in your test: `const fileBeingTested = require("./indexController")`
 4. Follow test case examples seen [here](/examples)
