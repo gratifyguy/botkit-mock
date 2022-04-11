@@ -96,7 +96,6 @@ describe('slack_features file general-slack', () => {
                     ]
                 }
             ]);
-            console.log(this.controller.detailed_answers)
             assert.deepStrictEqual(this.controller.detailed_answers[this.userPrivateChannel][0].text, 'Let\'s talk in private.');
         });
     });
@@ -526,7 +525,6 @@ describe('slack_features file general-slack', () => {
                     "submit_label": "Submit",
                     "title": "this is a dialog",
                 },
-                "token": "mock-token"
             });
         });
 
