@@ -150,5 +150,5 @@ To add functionality to Botkit-Mock for your favorite chat platform, please open
 
 Built by the team at https://www.gratify.ai.
 
-Like Botkit-Mock? Donate BTC to our team: 1KwpqzTvpLWiUST2V5wmPiT3twwc1pZ9tP
+Like Botkit-Mock? Donate to our team: amplicity.eth
 
