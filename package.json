@@ -10,7 +10,7 @@
     "mocha": "^10.0.0"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.2.0",
     "axios-mock-adapter": "^1.18.1",
     "botbuilder": "^4.14.0",
     "botbuilder-adapter-slack": "^1.0.13",
